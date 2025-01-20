@@ -1,0 +1,32 @@
+<mat-drawer-container class="main-container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side" opened>
+    <mat-nav-list>
+      <div mat-subheader>Admin.</div>
+      <a mat-list-item href="#!" active>
+        <mat-icon matListItemIcon>school</mat-icon>
+        Estudiantes
+      </a>
+      <a mat-list-item href="#!">
+        <mat-icon matListItemIcon>book</mat-icon>
+        Cursos
+      </a>
+    </mat-nav-list>
+    <!-- @if (showFiller) {
+      <p>Lorem, ipsum dolor sit amet consectetur.</p>
+    }
+    <button (click)="showFiller = !showFiller" mat-raised-button>
+      Toggle extra text
+    </button> -->
+  </mat-drawer>
+
+  <!-- Content -->
+  <div class="sidenav-content">
+    <app-toolbar/>
+
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+  </div>
+
+</mat-drawer-container>
+

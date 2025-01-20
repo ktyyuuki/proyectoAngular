@@ -1,0 +1,28 @@
+$primario: #1F1E30;
+$secundario: #D8F275;
+$blanco: #fff;
+$negro: #222;
+$light: #F7F7F5;
+
+.main-container{
+  min-height: 100vh;
+  .sidenav {
+    padding: 1rem;
+    background-color: rgb(115, 147, 177);
+    // color: $blanco;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    mat-icon{
+      color: $secundario;
+    }
+  }
+  .sidenav-content {
+    // display: flex;
+    height: 200vh;
+    // align-items: center;
+    // justify-content: center;
+  }
+}
+

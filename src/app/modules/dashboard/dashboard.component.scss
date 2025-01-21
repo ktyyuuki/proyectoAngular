@@ -8,19 +8,20 @@ $light: #F7F7F5;
   min-height: 100vh;
   .sidenav {
     padding: 1rem;
-    background-color: rgb(115, 147, 177);
+    background-color: rgb(192, 202, 211);
     // color: $blanco;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
     mat-icon{
-      color: $secundario;
+      color: $primario;
     }
   }
   .sidenav-content {
+    // background-color: #fff;
     // display: flex;
-    height: 200vh;
+    min-height: 100vh;
     // align-items: center;
     // justify-content: center;
   }

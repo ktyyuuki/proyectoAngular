@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { StudentsModule } from './pages/students/students.module';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    StudentsModule
   ],
   exports: [
     DashboardComponent

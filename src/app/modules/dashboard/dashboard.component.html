@@ -21,11 +21,15 @@
 
   <!-- Content -->
   <div class="sidenav-content">
-    <app-toolbar/>
-
-    <button type="button" mat-button (click)="drawer.toggle()">
+    <app-toolbar (drawerToggle)="drawer.toggle()"/>
+    <main class="py-5 px-4">
+      <app-students/>
+    </main>
+    <!-- <button type="button" mat-button (click)="drawer.toggle()">
       Toggle sidenav
-    </button>
+    </button> -->
+
+    <!-- <button class="btn btn-danger">boton</button> -->
   </div>
 
 </mat-drawer-container>

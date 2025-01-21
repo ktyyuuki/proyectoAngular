@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Dialog with elements</h2>
+<mat-dialog-content class="pt-3">
+  <form [formGroup]="editStudentForm">
+    <mat-form-field class="w-100 mb-0" appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input title="name" formControlName="name" matInput />
+    </mat-form-field>
+    <mat-form-field class="w-100 mb-0" appearance="outline">
+      <mat-label>Apellido</mat-label>
+      <input title="lastname" formControlName="lastName" matInput />
+    </mat-form-field>
+      <!-- <div class="col-auto">
+        <button type="submit" mat-flat-button class="mb-3">Crear Estudiante</button>
+      </div> -->
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+  <button type="submit" (click)="onSubmit()" mat-button>Guardar</button>
+</mat-dialog-actions>
+

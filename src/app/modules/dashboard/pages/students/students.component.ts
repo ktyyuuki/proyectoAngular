@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Student } from './models';
 import { generateId } from '../../../../shared/utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { StudentDialogComponent } from './components/student-dialog/student-dialog.component';
 
 @Component({
   selector: 'app-students',
@@ -25,22 +27,14 @@ export class StudentsComponent {
     }
   ];
   addStudentForm: FormGroup;
+  editingStudentId: number | null = null;
 
-  constructor(private fb: FormBuilder ) {
+  constructor(private fb: FormBuilder, private matDialog: MatDialog ) {
     this.addStudentForm = this.fb.group({
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]]
     });
   }
-
-  // onSubmit(){
-  //   if(this.addStudentForm.invalid){
-  //     this.addStudentForm.markAllAsTouched();
-  //   } else {
-  //     alert("Se ha creado un nuevo estudiante");
-  //     this.addStudentForm.reset();
-  //   }
-  // }
 
   onCreateStudent() {
     if (this.addStudentForm.invalid) {
@@ -62,5 +56,27 @@ export class StudentsComponent {
     if(confirm('¿Estás seguro de eliminar este estudiante?')){
       this.students = this.students.filter((item) => item.id != id);
     }
+  }
+
+  onEdit(student: Student): void{
+    this.editingStudentId = student.id;
+    this.matDialog
+      .open(StudentDialogComponent, {
+        data: student,
+      })
+      .afterClosed()
+      .subscribe({
+        next: (valorFormulario) => {
+          if (!!valorFormulario) {
+            // Logica de editar
+            this.students = this.students.map((student) =>
+              student.id === this.editingStudentId
+                ? { ...student, ...valorFormulario }
+                : student
+            );
+            this.editingStudentId = null;
+          }
+        },
+      });
   }
 }

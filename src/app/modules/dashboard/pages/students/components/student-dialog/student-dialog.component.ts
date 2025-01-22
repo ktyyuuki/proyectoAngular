@@ -21,7 +21,9 @@ export class StudentDialogComponent {
   ){
     this.editStudentForm = this.fb.group({
       name: [null, [Validators.required]],
-      lastName: [null, [Validators.required]]
+      lastName: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      phone: [null, [Validators.required, Validators.maxLength(12)]]
     });
 
     if(!!data) {
@@ -29,10 +31,11 @@ export class StudentDialogComponent {
       this.editStudentForm.patchValue({
         name: data.name,
         lastName: data.lastName,
+        email: data.email,
+        phone: data.phone
       });
     }
   }
-
 
   onSubmit() {
     if (this.editStudentForm.invalid) {

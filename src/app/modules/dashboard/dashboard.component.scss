@@ -1,29 +1,19 @@
-$primario: #1F1E30;
-$secundario: #D8F275;
-$blanco: #fff;
-$negro: #222;
-$light: #F7F7F5;
-
 .main-container{
   min-height: 100vh;
+  background-color: #fff;
   .sidenav {
     padding: 1rem;
     background-color: rgb(192, 202, 211);
-    // color: $blanco;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
     mat-icon{
-      color: $primario;
+      color: #050024;
     }
   }
   .sidenav-content {
-    // background-color: #fff;
-    // display: flex;
     min-height: 100vh;
-    // align-items: center;
-    // justify-content: center;
   }
 }
 

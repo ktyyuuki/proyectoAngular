@@ -17,3 +17,13 @@ html {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.btn-color-primary{
+  background-color: #050024!important;
+  color: #fff;
+  &:hover{
+    background-color: #020000!important;
+  }
+}
+.bg-light-color{
+  background-color: #F1F5FB;
+}

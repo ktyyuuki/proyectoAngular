@@ -13,17 +13,21 @@ import { StudentDialogComponent } from './components/student-dialog/student-dial
   styleUrl: './students.component.scss'
 })
 export class StudentsComponent {
-  displayedColumns: string[] = ['id', 'name', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'mail', 'phone', 'edit', 'delete'];
   students: Student[] = [
     {
       id: 1,
       name: 'John',
-      lastName: 'Doe'
+      lastName: 'Doe',
+      email: 'john.doe@mail.com',
+      phone: '+56999999999'
     },
     {
       id: 2,
       name: 'Hannah',
-      lastName: 'Smith'
+      lastName: 'Smith',
+      email: 'hsmith@mail.com',
+      phone: '+56998765432'
     }
   ];
   addStudentForm: FormGroup;
@@ -32,7 +36,9 @@ export class StudentsComponent {
   constructor(private fb: FormBuilder, private matDialog: MatDialog ) {
     this.addStudentForm = this.fb.group({
       name: [null, [Validators.required]],
-      lastName: [null, [Validators.required]]
+      lastName: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      phone: [null, [Validators.required, Validators.maxLength(12)]]
     });
   }
 

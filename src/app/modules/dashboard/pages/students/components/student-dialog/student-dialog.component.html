@@ -1,21 +1,31 @@
-<h2 mat-dialog-title>Dialog with elements</h2>
+<h2 mat-dialog-title class="fw-bold text-center my-3">Editar Estudiante</h2>
 <mat-dialog-content class="pt-3">
   <form [formGroup]="editStudentForm">
     <mat-form-field class="w-100 mb-0" appearance="outline">
       <mat-label>Nombre</mat-label>
       <input title="name" formControlName="name" matInput />
     </mat-form-field>
+
     <mat-form-field class="w-100 mb-0" appearance="outline">
       <mat-label>Apellido</mat-label>
       <input title="lastname" formControlName="lastName" matInput />
     </mat-form-field>
-      <!-- <div class="col-auto">
-        <button type="submit" mat-flat-button class="mb-3">Crear Estudiante</button>
-      </div> -->
+
+    <mat-form-field  class="w-100 mb-0" appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input title="phone" formControlName="phone" type="tel" matInput />
+      <mat-icon matSuffix>phone</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field  class="w-100 mb-0" appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input title="mail" formControlName="email" type="email" matInput />
+      <mat-icon matSuffix>mail</mat-icon>
+    </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
-  <button type="submit" (click)="onSubmit()" mat-button>Guardar</button>
+  <button mat-stroked-button mat-dialog-close class="text-secondary">Cancelar</button>
+  <button type="submit" (click)="onSubmit()" mat-flat-button class="btn-color-primary">Guardar cambios</button>
 </mat-dialog-actions>
 

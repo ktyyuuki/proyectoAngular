@@ -1,105 +1,122 @@
 <h1 class="fw-bold fs-2 mb-4">Estudiantes</h1>
 
-<div class="row gx-4">
-  <div class="col-lg-8">
-    <!-- Tabla estudiantes -->
-    <div class="p-2 border border-light rounded-4 shadow-sm mb-5 table-responsive">
-      <table mat-table [dataSource]="students" class="mat-elevation-z8 bg-white">
-        <!-- id Column -->
-        <ng-container matColumnDef="id" >
-          <th mat-header-cell *matHeaderCellDef width="10%"> ID </th>
-          <td mat-cell *matCellDef="let element" class="text-secondary"> {{element.id}} </td>
-        </ng-container>
+@if (isLoading) {
+  <mat-spinner></mat-spinner>
+} @else {
+  <div class="row gx-4">
+    <div class="col-lg-8">
+      <!-- Tabla estudiantes -->
+        @if (hasError) {
+          <p>Ha ocurrido un error</p>
+        } @else {
+          <div class="p-2 border border-light rounded-4 shadow-sm mb-5 table-responsive">
+            <table mat-table [dataSource]="students" class="mat-elevation-z8 bg-white">
+              <!-- id Column -->
+              <ng-container matColumnDef="id" >
+                <th mat-header-cell *matHeaderCellDef width="10%"> ID </th>
+                <td mat-cell *matCellDef="let element" class="text-secondary"> {{element.id}} </td>
+              </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Nombre </th>
-          <td mat-cell *matCellDef="let element" class="fw-medium text-secondary"> {{ element | fullName }} </td>
-        </ng-container>
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element" class="fw-medium text-secondary"> {{ element | fullName }} </td>
+              </ng-container>
 
-        <!-- Correo -->
-        <ng-container matColumnDef="mail">
-          <th mat-header-cell *matHeaderCellDef> E-mail </th>
-          <td mat-cell *matCellDef="let element"><a href="mailto:{{ element.email }}">{{ element.email }}</a></td>
-        </ng-container>
+              <!-- Correo -->
+              <ng-container matColumnDef="mail">
+                <th mat-header-cell *matHeaderCellDef> E-mail </th>
+                <td mat-cell *matCellDef="let element"><a href="mailto:{{ element.email }}">{{ element.email }}</a></td>
+              </ng-container>
 
-        <!-- Teléfono -->
-        <ng-container matColumnDef="phone">
-          <th mat-header-cell *matHeaderCellDef> Teléfono </th>
-          <td mat-cell *matCellDef="let element" class="text-secondary"> {{ element.phone }} </td>
-        </ng-container>
+              <!-- Teléfono -->
+              <ng-container matColumnDef="phone">
+                <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+                <td mat-cell *matCellDef="let element" class="text-secondary"> {{ element.phone }} </td>
+              </ng-container>
 
-        <!-- Edit Column -->
-        <ng-container matColumnDef="edit">
-          <th mat-header-cell *matHeaderCellDef width="10"> Editar </th>
-          <td mat-cell *matCellDef="let element">
-            <button title="edit" mat-icon-button (click)="onEdit(element)" class="text-secondary">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+              <!-- Edit Column -->
+              <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef width="10"> Editar </th>
+                <td mat-cell *matCellDef="let element">
+                  <button title="edit" mat-icon-button (click)="onEdit(element)" class="text-secondary">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
 
-        <!-- Delete Column -->
-        <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef width="10"> Borrar </th>
-          <td mat-cell *matCellDef="let element">
-            <button title="delete" mat-icon-button (click)="onDelete(element.id)" class="text-secondary">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+              <!-- View Column -->
+              <ng-container matColumnDef="view">
+                <th mat-header-cell *matHeaderCellDef width="10"> Detalle </th>
+                <td mat-cell *matCellDef="let element">
+                  <!-- <button title="view" mat-icon-button (click)="getStudentDetails(element.id)" class="text-secondary">
+                    <mat-icon>visibility</mat-icon>
+                  </button> -->
+                </td>
+              </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+              <!-- Delete Column -->
+              <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef width="10"> Borrar </th>
+                <td mat-cell *matCellDef="let element">
+                  <button title="delete" mat-icon-button (click)="onDelete(element.id)" class="text-secondary">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+
+          <!-- <div *ngIf="selectedStudent" class="mat-elevation-z4 p-4 mt-4">
+            <h2>Detalle del Estudiante</h2>
+            <p><strong>ID:</strong>{{ selectedStudent.id }}</p>
+            <p><strong>Nombre:</strong>{{ selectedStudent.name }}</p>
+            <p><strong>Apellido:</strong>{{ selectedStudent.lastName }}</p>
+          </div> -->
+        }
+      </div>
+
+    <!-- Registrar nuevo estudiante -->
+    <div class="col-lg-4">
+      <div class="shadow-sm p-4 rounded-4 bg-light-color">
+        <h2 appHeaderSize class="mb-4">Registrar nuevo estudiante</h2>
+        <form [formGroup]="addStudentForm">
+          <div class="row align-items-center">
+            <div class="col-md-6 col-lg-12">
+              <mat-form-field class="w-100 mb-0" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input title="name" formControlName="name" matInput />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-lg-12">
+              <mat-form-field class="w-100 mb-0" appearance="outline">
+                <mat-label>Apellido</mat-label>
+                <input title="lastname" formControlName="lastName" matInput />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-lg-12">
+              <mat-form-field  class="w-100 mb-0" appearance="outline">
+                <mat-label>Teléfono</mat-label>
+                <input title="phone" formControlName="phone" type="tel" matInput />
+                <mat-icon matSuffix>phone</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-lg-12">
+              <mat-form-field  class="w-100 mb-0" appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input title="mail" formControlName="email" type="email" matInput />
+                <mat-icon matSuffix>mail</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="col-12 text-end">
+              <button type="submit" mat-flat-button (click)="onCreateStudent()" class="btn-color-primary w-100">Crear Estudiante</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-
-  <!-- Registrar nuevo estudiante -->
-  <div class="col-lg-4">
-    <div class="shadow-sm p-4 rounded-4 bg-light-color">
-      <h2 appHeaderSize class="mb-4">Registrar nuevo estudiante</h2>
-      <form [formGroup]="addStudentForm">
-        <div class="row align-items-center">
-          <div class="col-md-6 col-lg-12">
-            <mat-form-field class="w-100 mb-0" appearance="outline">
-              <mat-label>Nombre</mat-label>
-              <input title="name" formControlName="name" matInput />
-            </mat-form-field>
-          </div>
-          <div class="col-md-6 col-lg-12">
-            <mat-form-field class="w-100 mb-0" appearance="outline">
-              <mat-label>Apellido</mat-label>
-              <input title="lastname" formControlName="lastName" matInput />
-            </mat-form-field>
-          </div>
-          <div class="col-md-6 col-lg-12">
-            <mat-form-field  class="w-100 mb-0" appearance="outline">
-              <mat-label>Teléfono</mat-label>
-              <input title="phone" formControlName="phone" type="tel" matInput />
-              <mat-icon matSuffix>phone</mat-icon>
-            </mat-form-field>
-          </div>
-          <div class="col-md-6 col-lg-12">
-            <mat-form-field  class="w-100 mb-0" appearance="outline">
-              <mat-label>E-mail</mat-label>
-              <input title="mail" formControlName="email" type="email" matInput />
-              <mat-icon matSuffix>mail</mat-icon>
-            </mat-form-field>
-          </div>
-          <div class="col-12 text-end">
-            <button type="submit" mat-flat-button (click)="onCreateStudent()" class="btn-color-primary w-100">Crear Estudiante</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-
-
-<!-- <pre>{{ students | json }}</pre> -->
-
-
-
+}

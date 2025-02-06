@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Student } from './models';
 import { generateId } from '../../../../shared/utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentDialogComponent } from './components/student-dialog/student-dialog.component';
+import { StudentsService } from '../../../../core/services/students.service';
 
 @Component({
   selector: 'app-students',
@@ -12,34 +13,52 @@ import { StudentDialogComponent } from './components/student-dialog/student-dial
   templateUrl: './students.component.html',
   styleUrl: './students.component.scss'
 })
-export class StudentsComponent {
-  displayedColumns: string[] = ['id', 'name', 'mail', 'phone', 'edit', 'delete'];
-  students: Student[] = [
-    {
-      id: 1,
-      name: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@mail.com',
-      phone: '+56999999999'
-    },
-    {
-      id: 2,
-      name: 'Hannah',
-      lastName: 'Smith',
-      email: 'hsmith@mail.com',
-      phone: '+56998765432'
-    }
-  ];
+export class StudentsComponent implements OnInit{
+  displayedColumns: string[] = ['id', 'name', 'mail', 'phone', 'edit', 'view', 'delete'];
+  students: Student[] = [];
+  selectedStudent: any;
+
   addStudentForm: FormGroup;
   editingStudentId: number | null = null;
 
-  constructor(private fb: FormBuilder, private matDialog: MatDialog ) {
+  isLoading = false;
+  hasError = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private matDialog: MatDialog,
+    private studentService: StudentsService
+  ) {
     this.addStudentForm = this.fb.group({
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       phone: [null, [Validators.required, Validators.maxLength(12)]]
     });
+  }
+
+  ngOnInit(): void {
+    // this.studentService.getStudents().subscribe(data => {
+    //   this.students = data;
+    // })
+    this.loadStudentsObs();
+  }
+
+  loadStudentsObs(): void {
+    this.isLoading = true;
+    this.studentService.getStudentsObservable().subscribe({
+      next: (students) => {
+        this.students = students;
+      },
+      error: (error) => {
+        this.hasError = true;
+        alert(error);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    })
   }
 
   onCreateStudent() {
@@ -60,9 +79,16 @@ export class StudentsComponent {
 
   onDelete(id:number){
     if(confirm('¿Estás seguro de eliminar este estudiante?')){
-      this.students = this.students.filter((item) => item.id != id);
+      // this.students = this.students.filter((item) => item.id != id);
+      this.students = this.students.filter((student) => student.id !== id);
     }
   }
+
+  // getStudentDetails(id: number){
+  //   this.studentService.getStudentById(id).subscribe(student => {
+  //     this.selectedStudent = student;
+  //   })
+  // }
 
   onEdit(student: Student): void{
     this.editingStudentId = student.id;

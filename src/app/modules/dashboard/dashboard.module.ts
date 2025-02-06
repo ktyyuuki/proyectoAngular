@@ -5,28 +5,26 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { StudentsModule } from './pages/students/students.module';
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    NavMenuComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     MatSidenavModule,
-    MatListModule,
-    MatIconModule,
     MatToolbarModule,
-    MatButtonModule,
-    StudentsModule
+    StudentsModule,
+    SharedModule
   ],
   exports: [
     DashboardComponent

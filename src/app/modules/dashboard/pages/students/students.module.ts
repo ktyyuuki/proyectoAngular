@@ -12,8 +12,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../../../shared/shared.module";
 import { StudentDialogComponent } from './components/student-dialog/student-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
 
 
 
@@ -22,7 +20,7 @@ import {provideNativeDateAdapter} from '@angular/material/core';
     StudentsComponent,
     StudentDialogComponent
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [],
   imports: [
     CommonModule,
     StudentsRoutingModule,
@@ -34,7 +32,6 @@ import {provideNativeDateAdapter} from '@angular/material/core';
     MatInputModule,
     SharedModule,
     MatDialogModule,
-    MatDatepickerModule,
 ],
   exports: [
     StudentsComponent

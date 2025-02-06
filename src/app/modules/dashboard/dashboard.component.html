@@ -1,16 +1,6 @@
 <mat-drawer-container class="main-container" autosize>
-  <mat-drawer #drawer class="sidenav" mode="side">
-    <mat-nav-list>
-      <div mat-subheader>Admin.</div>
-      <a mat-list-item href="#!" active>
-        <mat-icon matListItemIcon>school</mat-icon>
-        Estudiantes
-      </a>
-      <a mat-list-item href="#!">
-        <mat-icon matListItemIcon>book</mat-icon>
-        Cursos
-      </a>
-    </mat-nav-list>
+  <mat-drawer #drawer class="sidenav" mode="side" [opened]="true">
+    <app-nav-menu/>
   </mat-drawer>
 
   <!-- Content -->

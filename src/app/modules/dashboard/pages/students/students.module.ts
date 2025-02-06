@@ -12,13 +12,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../../../shared/shared.module";
 import { StudentDialogComponent } from './components/student-dialog/student-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { StudentDetailComponent } from './pages/student-detail/student-detail.component';
 
 
 
 @NgModule({
   declarations: [
     StudentsComponent,
-    StudentDialogComponent
+    StudentDialogComponent,
+    StudentDetailComponent
   ],
   providers: [],
   imports: [

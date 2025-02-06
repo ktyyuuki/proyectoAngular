@@ -1,8 +1,7 @@
-<h1 class="fw-bold fs-2 mb-4">Estudiantes</h1>
-
 @if (isLoading) {
   <mat-spinner></mat-spinner>
 } @else {
+  <h1 class="fw-bold fs-2 mb-4">Estudiantes</h1>
   <div class="row gx-4">
     <div class="col-lg-8">
       <!-- Tabla estudiantes -->
@@ -13,7 +12,7 @@
             <table mat-table [dataSource]="students" class="mat-elevation-z8 bg-white">
               <!-- id Column -->
               <ng-container matColumnDef="id" >
-                <th mat-header-cell *matHeaderCellDef width="10%"> ID </th>
+                <th mat-header-cell *matHeaderCellDef width="5%"> ID </th>
                 <td mat-cell *matCellDef="let element" class="text-secondary"> {{element.id}} </td>
               </ng-container>
 
@@ -37,7 +36,7 @@
 
               <!-- Edit Column -->
               <ng-container matColumnDef="edit">
-                <th mat-header-cell *matHeaderCellDef width="10"> Editar </th>
+                <th mat-header-cell *matHeaderCellDef width="5"> Editar </th>
                 <td mat-cell *matCellDef="let element">
                   <button title="edit" mat-icon-button (click)="onEdit(element)" class="text-secondary">
                     <mat-icon>edit</mat-icon>
@@ -47,7 +46,7 @@
 
               <!-- View Column -->
               <ng-container matColumnDef="view">
-                <th mat-header-cell *matHeaderCellDef width="10"> Detalle </th>
+                <th mat-header-cell *matHeaderCellDef width="5"> Detalle </th>
                 <td mat-cell *matCellDef="let element">
                   <!-- <button title="view" mat-icon-button (click)="getStudentDetails(element.id)" class="text-secondary">
                     <mat-icon>visibility</mat-icon>
@@ -57,7 +56,7 @@
 
               <!-- Delete Column -->
               <ng-container matColumnDef="delete">
-                <th mat-header-cell *matHeaderCellDef width="10"> Borrar </th>
+                <th mat-header-cell *matHeaderCellDef width="5"> Borrar </th>
                 <td mat-cell *matCellDef="let element">
                   <button title="delete" mat-icon-button (click)="onDelete(element.id)" class="text-secondary">
                     <mat-icon>delete</mat-icon>

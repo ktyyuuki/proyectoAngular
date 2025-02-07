@@ -16,13 +16,23 @@ export class NavMenuComponent {
     },
     {
       label: 'Estudiantes',
-      icon: 'school',
+      icon: 'groups',
       routerLink: 'students'
     },
     {
       label: 'Cursos',
       icon: 'book',
       routerLink: 'courses'
+    },
+    {
+      label: 'Clases',
+      icon: 'school',
+      routerLink: 'class'
+    },
+    {
+      label: 'Usuarios',
+      icon: 'manage_accounts',
+      routerLink: 'users'
     }
   ];
 }

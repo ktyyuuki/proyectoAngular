@@ -25,9 +25,9 @@ export class CoursesComponent implements OnInit {
   }
 
   openFormDialog(editingCourse?: Courses): void{
-    if(editingCourse){
-      console.log('Se va a editar: ', editingCourse)
-    }
+    // if(editingCourse){
+    //   console.log('Se va a editar: ', editingCourse)
+    // }
     this.matDialog
       .open(CourseFormDialogComponent, {data: {editingCourse} })
       .afterClosed().subscribe({

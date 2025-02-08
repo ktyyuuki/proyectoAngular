@@ -9,14 +9,18 @@ let STUDENTS_DB : Student[] = [
     "name": "John",
     "lastName": "Doe",
     "email": "john.doe@mail.com",
-    "phone": "+56999999999"
+    "phone": "+56999999999",
+    "profile": "Desarrollador",
+    "gender": "M"
   },
   {
     "id": 2,
     "name": "Hannah",
     "lastName": "Smith",
     "email": "hsmith@mail.com",
-    "phone": "+56998765432"
+    "phone": "+56998765432",
+    "profile": "UI/UX",
+    "gender": "F"
   }
 ]
 

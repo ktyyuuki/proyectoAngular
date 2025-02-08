@@ -1,16 +1,22 @@
 <div class="d-flex flex-row justify-content-between align-items-center">
   <h2 class="fw-bold fs-2 mb-4">Cursos</h2>
 
-  <button title="add" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
+  <button title="add" (click)="openFormDialog()" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
     <mat-icon>add</mat-icon>
     Nuevo Curso
   </button>
 </div>
 
 @if (isLoading) {
-  <mat-spinner></mat-spinner>
+  <div class="py-5">
+    <mat-spinner class="mx-auto"></mat-spinner>
+  </div>
 } @else {
-  <app-courses-table [dataSource]="dataSource" (delete)="onDelete($event)"/>
+  <app-courses-table
+    [dataSource]="dataSource"
+    (delete)="onDelete($event)"
+    (edit)="openFormDialog($event)"
+  />
 }
 
 

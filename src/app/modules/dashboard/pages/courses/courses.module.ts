@@ -5,12 +5,14 @@ import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CoursesTableComponent } from './components/courses-table/courses-table.component';
+import { CourseFormDialogComponent } from './components/course-form-dialog/course-form-dialog.component';
 
 
 @NgModule({
   declarations: [
     CoursesComponent,
-    CoursesTableComponent
+    CoursesTableComponent,
+    CourseFormDialogComponent
   ],
   imports: [
     CommonModule,

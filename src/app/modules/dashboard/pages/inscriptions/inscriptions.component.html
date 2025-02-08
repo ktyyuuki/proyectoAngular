@@ -1,0 +1,21 @@
+<div class="d-flex flex-row justify-content-between align-items-center mb-3">
+  <h2 class="fw-bold fs-2 mb-4">Inscripciones</h2>
+
+  @if (!isLoading) {
+    <button title="add" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
+      <mat-icon>add</mat-icon>
+      Nueva Inscripción
+    </button>
+  }
+</div>
+
+ @if (isLoading) {
+  <div class="py-5">
+    <mat-spinner class="mx-auto"/>
+  </div>
+ } @else {
+   <app-inscriptions-table
+     [dataSource]="dataSource"
+   />
+ }
+

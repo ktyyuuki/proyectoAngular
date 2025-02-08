@@ -25,9 +25,9 @@ export class NavMenuComponent {
       routerLink: 'courses'
     },
     {
-      label: 'Clases',
+      label: 'Inscripciones',
       icon: 'school',
-      routerLink: 'class'
+      routerLink: 'inscriptions'
     },
     {
       label: 'Usuarios',

@@ -14,8 +14,18 @@
     <mat-spinner class="mx-auto"/>
   </div>
  } @else {
-   <app-inscriptions-table
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Fecha inscripcion</th>
+          <th>Curso inscrito (id)</th>
+          <th>Alumno inscrito (id)</th>
+          <th>Usuario que realizó la inscripción (id)</th>
+        </tr>
+      </thead>
+    </table>
+   <!-- <app-inscriptions-table
      [dataSource]="dataSource"
-   />
+   /> -->
  }
 

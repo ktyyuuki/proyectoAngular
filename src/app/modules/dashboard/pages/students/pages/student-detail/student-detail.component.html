@@ -1,9 +1,78 @@
-<div class="d-flex flex-row align-items-start mb-4">
+<div class="d-flex flex-row align-items-center mb-2">
   <a mat-icon-button class="me-2" routerLink="/dashboard/students">
     <mat-icon>keyboard_return</mat-icon>
   </a>
   <div>
-    <h2 class="fw-bold">Detalle del Estudiante {{ studentId }}</h2>
-    <h3 appHeaderSize>{{ fullName }}</h3>
+    <p class="mb-0 text-secondary">Volver</p>
+    <!-- <h2 class="fs-3 fw-bold mb-0"><span class="text-14 d-block fw-medium text-secondary">ID Estudiante: {{ studentId }}</span> {{ fullName }}</h2> -->
+    <!-- <h3 appHeaderSize>{{ fullName }}</h3> -->
+  </div>
+</div>
+
+<div class="card-info-student rounded-4 py-3 px-4 mb-4">
+  <div class="row">
+    <div class="col-auto">
+      <figure class="bg-secondary">
+        <img src="person.jpg" class="img-fluid" alt="img student">
+      </figure>
+    </div>
+    <div class="col pt-2">
+      <p class="title-small mb-1">Nombre</p>
+      <h1 appHeaderSize class="mb-1">{{ fullName }}</h1>
+      <p class="text-14 mb-2 fw-medium">Perfil</p>
+      <p class="title-small">Género: F / M</p>
+      <!-- <div class="d-inline-flex gap-3">
+        <a href="" mat-mini-fab>
+          <mat-icon>phone</mat-icon>
+        </a>
+        <a href="" mat-mini-fab>
+          <mat-icon>envelope</mat-icon>
+        </a>
+      </div> -->
+    </div>
+    <div class="col">
+      <mat-list>
+        <mat-list-item class="mb-1"><span class="title-small">E-mail</span><a href="mailto:">contacto&#64;gmail.com</a></mat-list-item>
+        <mat-list-item><span class="title-small">Teléfono</span>+569 9990 9999</mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>
+
+<!-- Cursos a los que está inscrito -->
+<h4 appHeaderSize class="mb-3">Cursos inscritos</h4>
+<div class="row mx-auto">
+  <div class="list-course rounded-4 p-3 mb-2">
+    <div class="row align-items-center g-4">
+      <div class="col-auto">
+        <div class="icon">
+          <mat-icon>book</mat-icon>
+        </div>
+      </div>
+      <p appHeaderSize class="col-5 mb-0"><small class="title-small fw-medium">ID Curso: 1</small>Nombre Curso</p>
+      <p class="col mb-0"><span class="title-small mb-1">Profesor Asignado:</span>Nombre Profe</p>
+      <div class="col-auto ms-auto">
+        <button mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="list-course rounded-4 p-3 mb-2">
+    <div class="row align-items-center g-4">
+      <div class="col-auto">
+        <div class="icon">
+          <mat-icon>book</mat-icon>
+        </div>
+      </div>
+      <p appHeaderSize class="col-5 mb-0"><small class="title-small fw-medium">ID Curso: 1</small>Nombre Curso</p>
+      <p class="col mb-0"><span class="title-small mb-1">Profesor Asignado:</span>Nombre Profe</p>
+      <div class="col-auto ms-auto">
+        <button mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

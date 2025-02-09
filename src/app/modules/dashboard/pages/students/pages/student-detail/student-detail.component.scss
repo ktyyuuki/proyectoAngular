@@ -1,0 +1,43 @@
+.title-small{
+  font-size: 12px;
+  font-weight: 400;
+  display: block;
+  line-height: 12px;
+  color: #666;
+}
+.text-14{
+  font-size: 14px;
+}
+
+.list-course{
+  background-color: #f8fafd;
+  &:hover{
+    background-color: #F1F5FB;
+  }
+  .icon{
+    width: 45px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #050024;
+    color: #fff;
+  }
+}
+
+.card-info-student{
+  background-color: #F1F5FB;
+  figure{
+    width: 120px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin: 0;
+    border: 5px solid #050024;
+    overflow: hidden;
+    img{
+      object-fit: cover;
+    }
+  }
+}

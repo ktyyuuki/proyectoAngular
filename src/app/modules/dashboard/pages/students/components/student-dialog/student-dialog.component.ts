@@ -12,8 +12,8 @@ import { Student, STUDENT_GENDER, STUDENT_PROFFILE } from '../../models';
 })
 export class StudentDialogComponent {
   editStudentForm: FormGroup;
-  isEditing = false;
-  title = "Agregar Estudiante";
+  isEditing: boolean = false;
+  title: string = "Agregar Estudiante";
 
   //Opciones del form
   profiles = STUDENT_PROFFILE;

@@ -1,15 +1,36 @@
-<h3 appHeaderSize mat-dialog-title class="text-center">Crear Nuevo Curso</h3>
+<h3 appHeaderSize mat-dialog-title class="fw-bold text-center my-3">{{title}}</h3>
 
-<div mat-dialog-content>
+<div mat-dialog-content class="pt-3">
   <form [formGroup]="courseForm">
-    <mat-form-field class="w-100">
-      <mat-label for="">Nombre</mat-label>
-      <input type="text" formControlName="name" matInput>
-    </mat-form-field>
+    <div class="row">
+      <mat-form-field class="col-12" appearance="outline">
+        <mat-label for="">Nombre</mat-label>
+        <input type="text" formControlName="name" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col-lg-6" appearance="outline">
+        <mat-label for="">Horas Totales</mat-label>
+        <input type="number" formControlName="hours" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col-lg-6" appearance="outline">
+        <mat-label for="">N° de Clases</mat-label>
+        <input type="number" formControlName="nClasses" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col-12" appearance="outline">
+        <mat-label>Profesor Asignado</mat-label>
+        <mat-select formControlName="teacher">
+          @for (teacher of teachers; track $index) {
+            <mat-option [value]="teacher">{{teacher.name}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
   </form>
 </div>
 
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button mat-button (click)="onConfirm()">Confirmar</button>
+  <button mat-stroked-button mat-dialog-close class="text-secondary">Cancelar</button>
+  <button mat-flat-button (click)="onConfirm()" class="btn-color-primary">Confirmar</button>
 </div>

@@ -3,6 +3,8 @@ import { CoursesService } from '../../../../core/services/courses.service';
 import { Courses } from './models';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseFormDialogComponent } from './components/course-form-dialog/course-form-dialog.component';
+import { TeachersService } from '../../../../core/services/teachers.service';
+import { Teacher } from '../teachers/models/teacher';
 
 @Component({
   selector: 'app-courses',
@@ -44,7 +46,7 @@ export class CoursesComponent implements OnInit {
       });
   }
 
-  addNewCourse(data: {name: string}): void {
+  addNewCourse(data: {name: string, hours: number, nClasses: number, teacher: Teacher}): void {
     this.isLoading = true;
     this.coursesService.addCourse(data).subscribe({
       next: (data) => this.handleCoursesUpdate(data),
@@ -67,6 +69,7 @@ export class CoursesComponent implements OnInit {
 
     this.coursesService.getCourses().subscribe({
       next: (data) => {
+        console.log(data);
         this.handleCoursesUpdate(data);
       },
       error: () => {
@@ -79,7 +82,7 @@ export class CoursesComponent implements OnInit {
   }
 
   onDelete(id: string): void {
-    if (confirm("Estas seguro?")){
+    if (confirm("¿Estas seguro que deseas eliminar este curso?")){
       this.isLoading = true;
       this.coursesService.deleteCourseById(id).subscribe({
         next: (data) => {

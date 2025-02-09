@@ -12,7 +12,7 @@ export class CoursesTableComponent {
   @Input()
   dataSource: Courses[] = [];
 
-  displayedColumns: string[] = ['id', 'course', 'edit', 'view', 'delete'];
+  displayedColumns: string[] = ['id', 'course', 'hours', 'classes', 'teacher', 'edit', 'view', 'delete'];
 
   @Output()
   delete = new EventEmitter<string>();

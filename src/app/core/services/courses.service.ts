@@ -2,19 +2,30 @@ import { Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { Courses } from '../../modules/dashboard/pages/courses/models';
 import { generateRandomId } from '../../shared/utils';
+import { TEACHERS_DB } from './teachers.service';
+import { Teacher } from '../../modules/dashboard/pages/teachers/models/teacher';
 
 let COURSES_DB: Courses[] = [
   {
     id: generateRandomId('Javascript'),
-    name: 'Javascript'
+    name: 'Javascript',
+    hours: 40,
+    nClasses: 20,
+    teacher: TEACHERS_DB[0]
   },
   {
     id: generateRandomId('Angular'),
-    name: 'Angular'
+    name: 'Angular',
+    hours: 46,
+    nClasses: 23,
+    teacher: TEACHERS_DB[0]
   },
   {
     id: generateRandomId('RxJs'),
-    name: 'RxJs'
+    name: 'RxJs',
+    hours: 20,
+    nClasses: 10,
+    teacher: TEACHERS_DB[1]
   }
 ]
 
@@ -29,7 +40,7 @@ export class CoursesService {
     return of([...COURSES_DB]).pipe(delay(1000));
   }
 
-  addCourse(payload: {name: string}): Observable<Courses[]> {
+  addCourse(payload: {name: string, hours: number, nClasses: number, teacher: Teacher}): Observable<Courses[]> {
     COURSES_DB.push({
       ...payload,
       id: generateRandomId(payload.name),

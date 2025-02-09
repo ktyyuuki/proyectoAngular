@@ -12,6 +12,24 @@
       <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
+    <!-- horas -->
+    <ng-container matColumnDef="hours">
+      <th mat-header-cell *matHeaderCellDef width="12%"> Horas </th>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.hours}} hrs.</td>
+    </ng-container>
+
+    <!-- Clases -->
+    <ng-container matColumnDef="classes">
+      <th mat-header-cell *matHeaderCellDef width="12%"> N° Clases </th>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.nClasses}} </td>
+    </ng-container>
+
+    <!-- Clases -->
+    <ng-container matColumnDef="teacher">
+      <th mat-header-cell *matHeaderCellDef> Profesor </th>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.teacher?.name}} </td>
+    </ng-container>
+
     <!-- Edit Column -->
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef width="5"> Editar </th>

@@ -16,7 +16,6 @@ import { StudentsService } from '../../../../core/services/students.service';
 export class StudentsComponent implements OnInit{
   displayedColumns: string[] = ['id', 'name', 'mail','gender', 'phone', 'edit', 'view', 'delete'];
   students: Student[] = [];
-  // selectedStudent: Student;
 
   //Opciones del form
   profiles = STUDENT_PROFFILE;
@@ -55,7 +54,6 @@ export class StudentsComponent implements OnInit{
 
   openFormStudent(student?: Student): void{
     const isEditing = !!student;
-    this.isLoading = true;
 
     this.matDialog
       .open(StudentDialogComponent, { data: { student, isEditing }})
@@ -71,7 +69,6 @@ export class StudentsComponent implements OnInit{
                   : s
               );
             } else {
-              this.isLoading = true;
               // Crear
               this.studentService.addStudent(valorFormulario).subscribe((newStudent) => {
                 this.students = [...this.students, newStudent];
@@ -86,11 +83,8 @@ export class StudentsComponent implements OnInit{
               // ];
             }
           }
-          this.isLoading = false;
         },
-        error: () => {
-          this.isLoading = false;
-        }
+        error: () => {}
       })
   }
 
@@ -99,11 +93,4 @@ export class StudentsComponent implements OnInit{
       this.students = this.students.filter((student) => student.id !== id);
     }
   }
-
-  // getStudentDetails(id: number){
-  //   this.studentService.getStudentById(id).subscribe(student => {
-  //     this.selectedStudent = student;
-  //   })
-  // }
-
 }

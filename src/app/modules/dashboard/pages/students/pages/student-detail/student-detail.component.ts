@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { StudentsService } from '../../../../../../core/services/students.service';
+import { Student } from '../../models';
 
 @Component({
   selector: 'app-student-detail',
@@ -8,16 +10,31 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './student-detail.component.html',
   styleUrl: './student-detail.component.scss'
 })
-export class StudentDetailComponent {
-  studentId: number;
-  fullName: string;
+export class StudentDetailComponent implements OnInit{
+  studentId!: number;
+  student?: Student;
+  // fullName: string;
 
-  constructor(private activatedRoute: ActivatedRoute){
-    console.log(this.activatedRoute);
-    this.studentId = this.activatedRoute.snapshot.params['id'];
-    const name = this.activatedRoute.snapshot.queryParams['name'];
-    const lastName = this.activatedRoute.snapshot.queryParams['lastName'];
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private studentsService: StudentsService
+  ){  }
 
-    this.fullName = `${name} ${lastName}`;
+  ngOnInit(): void {
+    this.studentId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    // console.log('Student id: ', this.studentId);
+
+    this.studentsService.getStudentById(this.studentId).subscribe({
+      next:(studentData) => {
+        if(studentData){
+          this.student = studentData;
+          // console.log("Estudiante cargado:", this.student);
+        } else {
+          console.error("Estudiante no encontrado");
+        }
+      },
+      error: () => {},
+      complete: () => {}
+    });
   }
 }

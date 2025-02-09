@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of, delay } from 'rxjs';
 import { Student } from '../../modules/dashboard/pages/students/models';
+import { generateId } from '../../shared/utils/index';
 
 let STUDENTS_DB : Student[] = [
   {
@@ -33,10 +34,23 @@ export class StudentsService {
   getStudentsObservable(): Observable<Student[]>{
     return new Observable<Student[]>((subscriber) => {
       setTimeout(() => {
-        subscriber.next(STUDENTS_DB);
+        subscriber.next([...STUDENTS_DB]);
         // subscriber.error('Error al cargar los estudiantes');
-        subscriber.complete() // notifica que no emitirá mas datos
+        subscriber.complete()
       }, 2000);
     })
+  }
+
+  addStudent(student: Student): Observable<Student> {
+    student.id = generateId(STUDENTS_DB);
+    STUDENTS_DB.push(student);
+    // console.log("Estudiantes después de agregar:", STUDENTS_DB);
+    return of(student);
+  }
+
+  getStudentById(id: number): Observable<Student | undefined> {
+    const student = STUDENTS_DB.find(s => s.id === id);
+    // console.log("Buscando estudiante con ID:", id, "Resultado:", student);
+    return of(student);
   }
 }

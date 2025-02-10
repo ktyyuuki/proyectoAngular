@@ -1,1 +1,15 @@
-<p>users works!</p>
+<div class="d-flex flex-row flex-wrap justify-content-between align-items-center mb-3">
+  <h1 class="fw-bold fs-2">Usuarios</h1>
+
+  @if (!isLoading) {
+    <button title="add" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
+      <mat-icon>add</mat-icon>
+      Nuevo Usuario
+    </button>
+  }
+</div>
+@if (isLoading) {
+  <mat-spinner></mat-spinner>
+} @else {
+  <app-users-table [dataSource]="dataSource"/>
+}

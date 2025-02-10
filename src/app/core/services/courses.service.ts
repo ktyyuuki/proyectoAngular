@@ -60,4 +60,9 @@ export class CoursesService {
     COURSES_DB = COURSES_DB.filter(course => course.id != id);
     return this.getCourses();
   }
+
+  getCourseById(id: string): Observable<Courses | undefined> {
+    const course = COURSES_DB.find(c => c.id === id);
+    return of(course);
+  }
 }

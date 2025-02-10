@@ -6,10 +6,28 @@
       <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
 
+    <!-- Estudiante -->
+    <ng-container matColumnDef="studentIns">
+      <th mat-header-cell *matHeaderCellDef> Estudiante Inscrito </th>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.student}} </td>
+    </ng-container>
+
     <!-- Curso -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.name}} </td>
+    <ng-container matColumnDef="courseIns">
+      <th mat-header-cell *matHeaderCellDef> Curso Inscrito </th>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.course}} </td>
+    </ng-container>
+
+    <!-- Fecha Inscripcion -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Fecha Inscripción </th>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <!-- Fecha Inscripcion -->
+    <ng-container matColumnDef="user">
+      <th mat-header-cell *matHeaderCellDef> Usuario Responsable </th>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.user}} </td>
     </ng-container>
 
     <!-- Edit Column -->
@@ -23,7 +41,7 @@
     </ng-container>
 
     <!-- View Column -->
-    <ng-container matColumnDef="view">
+    <!-- <ng-container matColumnDef="view">
       <th mat-header-cell *matHeaderCellDef width="5"> Detalle </th>
       <td mat-cell *matCellDef="let element">
         <button title="view" mat-icon-button
@@ -31,7 +49,7 @@
           <mat-icon>visibility</mat-icon>
         </button>
       </td>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Delete Column -->
     <ng-container matColumnDef="delete">

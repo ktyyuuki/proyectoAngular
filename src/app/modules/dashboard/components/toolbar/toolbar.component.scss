@@ -5,3 +5,43 @@
     background-color: #4a4859;
   }
 }
+
+.dropdown{
+  .user-dropdown{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    text-decoration: none;
+    color: #050024;
+    .user-img{
+      border-radius: 50%;
+      aspect-ratio: 1;
+      border: 3px solid #050024;
+    }
+    p{
+      font-size: .9rem;
+      line-height: .9rem;
+      font-weight: 600;
+    }
+    small{
+      font-size: .7rem;
+      line-height: .7rem;
+      font-weight: 300;
+      color: #666;
+    }
+
+  }
+  .dropdown-menu{
+    .dropdown-item{
+      display: inline-flex;
+      align-items: center;
+      mat-icon{
+        width: 1rem;
+        height: 1rem;
+        font-size: 1rem;
+        margin-right: .5rem;
+      }
+    }
+  }
+}

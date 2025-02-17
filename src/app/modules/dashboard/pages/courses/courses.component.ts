@@ -34,7 +34,7 @@ export class CoursesComponent implements OnInit {
       .open(CourseFormDialogComponent, {data: {editingCourse} })
       .afterClosed().subscribe({
         next: (data) => {
-          console.log(data);
+          // console.log(data);
           if (!!data) {
             if(!!editingCourse){
               this.updateCourse(editingCourse.id, data);
@@ -69,7 +69,7 @@ export class CoursesComponent implements OnInit {
 
     this.coursesService.getCourses().subscribe({
       next: (data) => {
-        console.log(data);
+        // console.log(data);
         this.handleCoursesUpdate(data);
       },
       error: () => {

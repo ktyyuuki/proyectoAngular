@@ -1,28 +1,45 @@
 <main class="container-fluid d-flex flex-column">
   <div class="container d-flex flex-column align-items-center justify-content-center flex-grow-1 h-100">
-    <mat-card class="bg-white">
-      <mat-card-header class="w-100 text-center justify-content-center pt-4">
-        <mat-card-title appHeaderSize class="mb-4">Iniciar Sesión</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="text-secondary text-center fst-italic">*No funcional aún, solo clickear iniciar sesión*</p>
-        <form>
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>E-mail</mat-label>
-            <input type="email" matInput disabled>
-          </mat-form-field>
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Contraseña</mat-label>
-            <input type="password" matInput disabled>
-          </mat-form-field>
-        </form>
-      </mat-card-content>
-      <mat-card-actions class="mb-3">
-        <button type="submit" routerLink="/dashboard/home" mat-button class="w-100 btn-color-primary py-4 text-white text-uppercase">
-          Iniciar sesión
-        </button>
-      </mat-card-actions>
-    </mat-card>
+    <div class="row">
+      <div class="col-lg-8">
+        <mat-card class="bg-white">
+          <mat-card-header class="w-100 text-center justify-content-center pt-4">
+            <mat-card-title appHeaderSize class="mb-4">Iniciar Sesión</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form (ngSubmit)="onSubmit()" [formGroup]="loginform">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>E-mail</mat-label>
+                <input type="email" formControlName="email" matInput>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Contraseña</mat-label>
+                <input type="password" formControlName="password" matInput>
+              </mat-form-field>
+              <div class="mb-3">
+                <button type="submit" routerLink="/dashboard/home" mat-button class="w-100 btn-color-primary py-4 text-white text-uppercase">
+                  Iniciar sesión
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-lg-4">
+        <p class="fw-bold text-uppercase">Datos de acceso:</p>
+        <p class="fw-semibold mb-0 text-14">Administrador</p>
+        <ul class="list-unstyled text-14">
+          <li>email: "admin&#64;mail.com"</li>
+          <li>password: "123456"</li>
+        </ul>
+        <hr>
+        <p class="fw-semibold mb-0 text-14">Usuario</p>
+        <ul class="list-unstyled text-14">
+          <li>email: "user&#64;mail.com"</li>
+          <li>password: "123456"</li>
+        </ul>
+      </div>
+    </div>
 
   </div>
 </main>

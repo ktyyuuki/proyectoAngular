@@ -8,12 +8,12 @@
     <button class="btn btn-link dropdown-toggle user-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="person.jpg" width="50" class="img-fluid user-img" alt="user-img">
         <div class="mx-2 text-start">
-          <p class="mb-0">Nombre Usuario</p>
-          <small>perfil</small>
+          <p class="mb-0">{{ authUser?.name }}</p>
+          <small>{{ authUser?.profile }}</small>
         </div>
     </button>
     <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
-      <li><a class="dropdown-item" routerLink="auth/login"><mat-icon>logout</mat-icon> Cerrar Sesión</a></li>
+      <li><a class="dropdown-item" (click)="logout()"><mat-icon>logout</mat-icon> Cerrar Sesión</a></li>
     </ul>
   </div>
 </mat-toolbar>

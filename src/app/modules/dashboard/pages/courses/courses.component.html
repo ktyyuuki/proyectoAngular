@@ -1,7 +1,7 @@
 <div class="d-flex flex-row justify-content-between align-items-center">
   <h2 class="fw-bold fs-2 mb-4">Cursos</h2>
 
-  @if (!isLoading) {
+  @if (!isLoading && (isAdmin$ | async)) {
     <button title="add" (click)="openFormDialog()" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
       <mat-icon>add</mat-icon>
       Nuevo Curso

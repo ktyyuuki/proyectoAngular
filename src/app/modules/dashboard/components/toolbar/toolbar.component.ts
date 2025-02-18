@@ -18,7 +18,7 @@ export class ToolbarComponent {
     this.authService.authUser$.subscribe({
       next:(user) => {
         this.authUser = user;
-        console.log(user);
+        // console.log(user);
       }
     });
     // console.log(this.authUser);

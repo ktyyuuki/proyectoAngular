@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Student, STUDENT_GENDER, STUDENT_PROFFILE } from './models';
 import { generateId } from '../../../../shared/utils';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentDialogComponent } from './components/student-dialog/student-dialog.component';
 import { StudentsService } from '../../../../core/services/students.service';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-students',
@@ -13,9 +15,11 @@ import { StudentsService } from '../../../../core/services/students.service';
   templateUrl: './students.component.html',
   styleUrl: './students.component.scss'
 })
-export class StudentsComponent implements OnInit{
-  displayedColumns: string[] = ['id', 'name', 'mail','gender', 'phone', 'edit', 'view', 'delete'];
+export class StudentsComponent implements OnInit, OnDestroy{
+  // displayedColumns: string[] = ['id', 'name', 'mail','gender', 'phone', 'edit', 'view', 'delete'];
+  displayedColumns: string[] = [];
   students: Student[] = [];
+  isAdmin$: Observable<boolean>;
 
   //Opciones del form
   profiles = STUDENT_PROFFILE;
@@ -26,13 +30,38 @@ export class StudentsComponent implements OnInit{
   isLoading = false;
   hasError = false;
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private matDialog: MatDialog,
-    private studentService: StudentsService
-  ) {}
+    private studentService: StudentsService,
+    private authService: AuthService
+  ) {
+    this.isAdmin$ = this.authService.authUser$.pipe(map((x) => x?.profile === 'ADMIN'));
+  }
 
   ngOnInit(): void {
     this.loadStudentsObs();
+
+    this.isAdmin$
+    .pipe(takeUntil(this.destroy$)) // Se desuscribe cuando el componente se destruye
+    .subscribe(isAdmin => {
+      this.displayedColumns = this.getDisplayedColumns(isAdmin);
+      // console.log('Admin:', isAdmin, 'Columns:', this.displayedColumns);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  getDisplayedColumns(isAdmin: boolean) : string[] {
+    const columns = ['id', 'name', 'mail','gender', 'phone', 'view']; // Columnas Base
+    if(isAdmin){
+      columns.push('edit', 'delete');
+    }
+    return columns;
   }
 
   loadStudentsObs(): void {
@@ -74,13 +103,6 @@ export class StudentsComponent implements OnInit{
                 this.students = [...this.students, newStudent];
                 this.isLoading = false;
               });
-              // this.students = [
-              //   ...this.students,
-              //   {
-              //     id: generateId(this.students),
-              //     ...valorFormulario,
-              //   },
-              // ];
             }
           }
         },

@@ -20,9 +20,9 @@
 
       <mat-form-field class="col-12" appearance="outline">
         <mat-label>Profesor Asignado</mat-label>
-        <mat-select formControlName="teacher">
+        <mat-select formControlName="teacherId">
           @for (teacher of teachers; track $index) {
-            <mat-option [value]="teacher">{{teacher.name}}</mat-option>
+            <mat-option [value]="teacher.id">{{teacher.name}}</mat-option>
           }
         </mat-select>
       </mat-form-field>

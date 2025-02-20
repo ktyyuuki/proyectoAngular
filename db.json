@@ -90,8 +90,12 @@
       "id": "fa4e",
       "name": "CorelDraw",
       "hours": 30,
-      "nClasses": 15,
-      "teacherId": "2"
+      "nClasses": 16,
+      "teacherId": "2",
+      "teacher": {
+        "id": "2",
+        "name": "Nicole Soto"
+      }
     }
   ],
   "inscriptions": [

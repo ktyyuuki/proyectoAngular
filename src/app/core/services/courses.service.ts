@@ -18,7 +18,7 @@ export class CoursesService {
     return this.httpClient.get<Courses[]>(`${environment.baseApiUrl}/courses?_embed=teacher`).pipe(delay(1000));
   }
 
-  addCourse(payload: {name: string, hours: number, nClasses: number, teacher: Teacher}): Observable<Courses[]> {
+  addCourse(payload: {name: string, hours: number, nClasses: number, teacherId: Teacher['id']}): Observable<Courses[]> {
     // 1° Crear curso
     return (
       this.httpClient

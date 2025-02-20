@@ -31,12 +31,17 @@ export class CourseFormDialogComponent implements OnInit {
       name: ['', [Validators.required]],
       hours: ['', [Validators.required]],
       nClasses: ['', [Validators.required]],
-      teacher: [null, [Validators.required]]
+      teacherId: [null, [Validators.required]]
     });
 
     if (!!data && !!data.editingCourse) {
       this.title = "Editar Curso";
-      this.courseForm.patchValue(data.editingCourse);
+      this.courseForm.patchValue({
+        name: data.editingCourse.name,
+        hours: data.editingCourse.hours,
+        nClasses: data.editingCourse.nClasses,
+        teacherId: data.editingCourse.teacher?.id || null // Asegura que solo almacena el ID
+      });
     }
   }
 
@@ -56,7 +61,10 @@ export class CourseFormDialogComponent implements OnInit {
     if(this.courseForm.invalid){
       this.courseForm.markAllAsTouched();
     } else {
-      this.matDialogRef.close(this.courseForm.value);
+      // this.matDialogRef.close(this.courseForm.value);
+      const courseData = { ...this.courseForm.value };
+      console.log("Curso enviado:", this.courseForm.value);
+      this.matDialogRef.close(courseData);
     }
   }
 }

@@ -43,7 +43,7 @@ export class CoursesComponent implements OnInit {
           // console.log(data);
           if (!!data) {
             if(!!editingCourse){
-              this.updateCourse(editingCourse.id, data);
+              this.updateCourse(editingCourse.id, data)
             } else {
               this.addNewCourse(data);
             }
@@ -52,7 +52,7 @@ export class CoursesComponent implements OnInit {
       });
   }
 
-  addNewCourse(data: {name: string, hours: number, nClasses: number, teacher: Teacher}): void {
+  addNewCourse(data: {name: string, hours: number, nClasses: number, teacherId: Teacher['id']}): void {
     this.isLoading = true;
     this.coursesService.addCourse(data).subscribe({
       next: (data) => this.handleCoursesUpdate(data),
@@ -61,13 +61,18 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  updateCourse(id: string, data: {name:string}){
+  updateCourse(id: string, data: { name: string, hours: number, nClasses: number, teacherId: string }) {
+    // console.log("Actualizando curso con datos:", id, data);
     this.isLoading = true;
     this.coursesService.updateCourseById(id, data).subscribe({
-      next: (data) => this.handleCoursesUpdate(data),
-      error: (err) => (this.isLoading = false),
-      complete: () => (this.isLoading = false)
-    })
+      next: (updatedCourses) => {
+        this.handleCoursesUpdate(updatedCourses);
+      },
+      error: (err) => {
+        this.isLoading = false;
+      },
+      complete: () => this.isLoading = false
+    });
   }
 
   ngOnInit(): void {

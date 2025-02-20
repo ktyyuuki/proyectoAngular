@@ -34,7 +34,7 @@ export class StudentDetailComponent implements OnInit{
       next:(studentData) => {
         if(studentData){
           this.student = studentData;
-          console.log(this.student.inscriptions);
+          // console.log(this.student.inscriptions);
 
           if(studentData.inscriptions){
             // Obtener los courseId de las inscripciones
@@ -44,7 +44,7 @@ export class StudentDetailComponent implements OnInit{
             this.httpClient.get<Courses[]>(`${environment.baseApiUrl}/courses?${courseId}&_embed=teacher`).subscribe({
               next: (courses) => {
                 this.coursesInscription = courses.filter(c => courseId.includes(c.id));
-                console.log('Cursos inscritos:', this.coursesInscription);
+                // console.log('Cursos inscritos:', this.coursesInscription);
               },
               complete: () => this.isLoading = false
             });

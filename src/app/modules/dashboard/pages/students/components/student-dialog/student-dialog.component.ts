@@ -35,18 +35,6 @@ export class StudentDialogComponent {
       gender: [null, [Validators.required]]
     });
 
-    // if(!!data) {
-    //   this.isEditing = true;
-    //   this.editStudentForm.patchValue({
-    //     name: data.name,
-    //     lastName: data.lastName,
-    //     email: data.email,
-    //     phone: data.phone,
-    //     profile: data.profile,
-    //     gender: data.gender
-    //   });
-    // }
-
     if (this.isEditing && data.student) {
       this.title = "Editar Estudiante";
       this.editStudentForm.patchValue(data.student);

@@ -24,4 +24,11 @@ export class StudentsService {
     return this.httpClient.get<Student>(`${environment.baseApiUrl}/students/${id}?_embed=inscriptions`);
   }
 
+  updateStudentById(id: string, data: {name: string}): Observable<Student[]> {
+    return (
+      this.httpClient.patch<Student>(`${environment.baseApiUrl}/students/${id}`, data)
+      .pipe(concatMap(() => this.getStudentsObservable()))
+    )
+  }
+
 }

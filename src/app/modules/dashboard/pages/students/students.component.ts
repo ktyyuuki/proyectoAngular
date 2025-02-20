@@ -89,16 +89,19 @@ export class StudentsComponent implements OnInit, OnDestroy{
       .afterClosed()
       .subscribe({
         next: (valorFormulario) => {
-          if(!!valorFormulario){
-            // Editar
-            if(isEditing){
-              this.students = this.students.map((s) =>
-                s.id === student!.id // asegura que no sea null
-                  ? { ...s, ...valorFormulario }
-                  : s
-              );
+          if (!!valorFormulario) {
+            if (isEditing) {
+              this.studentService.updateStudentById(student!.id, valorFormulario).subscribe({
+                next: (updatedStudents) => {
+                  this.students = updatedStudents;
+                  this.isLoading = false;
+                },
+                error: (err) => {
+                  console.error("Error al actualizar el estudiante:", err);
+                  this.isLoading = false;
+                }
+              });
             } else {
-              // Crear
               this.studentService.addStudent(valorFormulario).subscribe((newStudent) => {
                 this.students = [...this.students, newStudent];
                 this.isLoading = false;

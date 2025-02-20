@@ -4,21 +4,6 @@ import { Observable, delay, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
-// export let TEACHERS_DB : Teacher[] = [
-//   {
-//     id: 1,
-//     name: 'Gastón Guzmán'
-//   },
-//   {
-//     id: 2,
-//     name: 'Nicole Soto'
-//   },
-//   {
-//     id: 3,
-//     name: 'Bautista Rojas'
-//   }
-// ]
-
 @Injectable({
   providedIn: 'root'
 })

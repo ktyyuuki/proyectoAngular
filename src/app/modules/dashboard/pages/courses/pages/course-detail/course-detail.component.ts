@@ -35,6 +35,7 @@ export class CourseDetailComponent implements OnInit{
     this.coursesService.getCourseById(this.courseId).subscribe({
       next: (courseData) => {
         this.course = courseData;
+        this.errorMessage = '';
 
         if (Array.isArray(courseData.inscriptions)) {
           // Obtener los studentId de las inscripciones
@@ -59,11 +60,14 @@ export class CourseDetailComponent implements OnInit{
         if (err instanceof HttpErrorResponse){
           if (err.status === 404){
             this.errorMessage = 'Curso no encontrado';
+          } else if (err.status === 500){
+            this.errorMessage = 'Ha ocurrido un problema en el servidor cargando el curso';
           }
         }
       },
       complete: () => {
-        this.isLoading = false
+        this.isLoading = false;
+        this.errorMessage = '';
       }
     })
   }

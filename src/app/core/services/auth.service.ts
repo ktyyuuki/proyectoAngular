@@ -71,7 +71,7 @@ export class AuthService {
           const userResult = res.length > 0 ? res[0] : null;
 
           if (userResult) {
-            console.log(userResult);
+            // console.log(userResult);Z
             this._authUser$.next(userResult);
           }
           return !!userResult;

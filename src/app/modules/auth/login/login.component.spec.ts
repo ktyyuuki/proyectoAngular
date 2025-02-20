@@ -30,7 +30,7 @@ describe('LoginComponent', () => {
     expect(loginComponent.loginform.get('password')?.hasValidator(Validators.required)).toBe(true);
   });
 
-  it('Debe marcar campos marcados si el form es inválido', () => {
+  it('Debe marcar campos si el form es inválido', () => {
     loginComponent.loginform.setValue({
       email: '',
       password: '',

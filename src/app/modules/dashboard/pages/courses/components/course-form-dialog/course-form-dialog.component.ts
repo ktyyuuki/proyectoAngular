@@ -53,7 +53,7 @@ export class CourseFormDialogComponent implements OnInit {
     this.teachersService.getTeachers().subscribe({
       next: (data) => {
         this.teachers = data;
-        console.log(data);
+        // console.log(data);
       }
     })
   }
@@ -61,9 +61,8 @@ export class CourseFormDialogComponent implements OnInit {
     if(this.courseForm.invalid){
       this.courseForm.markAllAsTouched();
     } else {
-      // this.matDialogRef.close(this.courseForm.value);
       const courseData = { ...this.courseForm.value };
-      console.log("Curso enviado:", this.courseForm.value);
+      // console.log("Curso enviado:", this.courseForm.value);
       this.matDialogRef.close(courseData);
     }
   }

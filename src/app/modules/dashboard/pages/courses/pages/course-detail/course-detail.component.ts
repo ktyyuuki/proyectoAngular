@@ -4,7 +4,7 @@ import { Courses } from '../../models';
 import { CoursesService } from '../../../../../../core/services/courses.service';
 import { Student } from '../../../students/models';
 import { environment } from '../../../../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-course-detail',
@@ -19,6 +19,8 @@ export class CourseDetailComponent implements OnInit{
 
   course?: Courses;
   courseId!: string;
+
+  errorMessage: string = "";
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,7 +55,12 @@ export class CourseDetailComponent implements OnInit{
       },
       error: (err) => {
         this.isLoading = false;
-        console.error("Curso no encontrado ", err)
+        // console.error("Curso no encontrado ", err);
+        if (err instanceof HttpErrorResponse){
+          if (err.status === 404){
+            this.errorMessage = 'Curso no encontrado';
+          }
+        }
       },
       complete: () => {
         this.isLoading = false

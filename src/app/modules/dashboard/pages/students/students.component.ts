@@ -110,7 +110,7 @@ export class StudentsComponent implements OnInit, OnDestroy{
       })
   }
 
-  onDelete(id:number): void {
+  onDelete(id: Student['id']): void {
     if(confirm('¿Estás seguro de eliminar este estudiante?')){
       this.students = this.students.filter((student) => student.id !== id);
     }

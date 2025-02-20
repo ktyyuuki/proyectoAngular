@@ -1,26 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Inscription } from '../../modules/dashboard/pages/inscriptions/models';
 import { delay, Observable, of } from 'rxjs';
-
-let INSCRIPTIONS_DB : Inscription[] = [
-  // {
-  //   id: 'cls1',
-  //   name: 'Clase-01'
-  // },
-  // {
-  //   id: 'cls2',
-  //   name: 'Clase-02'
-  // }
-]
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InscriptionsService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   getInscriptions(): Observable<Inscription[]> {
-    return of([...INSCRIPTIONS_DB]).pipe(delay(1000));
+    // return of([...INSCRIPTIONS_DB]).pipe(delay(1000));
+    return this.httpClient.get<Inscription[]>(`${environment.baseApiUrl}/inscriptions?_embed=student&_embed=course`);
   }
 }

@@ -9,26 +9,26 @@
     <!-- Estudiante -->
     <ng-container matColumnDef="studentIns">
       <th mat-header-cell *matHeaderCellDef> Estudiante Inscrito </th>
-      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.student}} </td>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.student | fullName}} </td>
     </ng-container>
 
     <!-- Curso -->
     <ng-container matColumnDef="courseIns">
       <th mat-header-cell *matHeaderCellDef> Curso Inscrito </th>
-      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.course}} </td>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.course.name}} </td>
     </ng-container>
 
     <!-- Fecha Inscripcion -->
-    <ng-container matColumnDef="date">
+    <!-- <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef> Fecha Inscripción </th>
       <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.date}} </td>
-    </ng-container>
+    </ng-container> -->
 
-    <!-- Fecha Inscripcion -->
-    <ng-container matColumnDef="user">
+    <!-- User -->
+    <!-- <ng-container matColumnDef="user">
       <th mat-header-cell *matHeaderCellDef> Usuario Responsable </th>
       <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.user}} </td>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Edit Column -->
     <ng-container matColumnDef="edit">

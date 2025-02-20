@@ -32,40 +32,25 @@
 
   <!-- Cursos a los que está inscrito -->
   <h4 appHeaderSize class="mb-3">Cursos inscritos</h4>
-  <div class="row mx-auto">
-    <div class="list-course rounded-4 p-3 mb-2">
-      <div class="row align-items-center g-4">
-        <div class="col-auto">
-          <div class="icon">
-            <mat-icon>book</mat-icon>
+  <div class="mx-auto">
+    @for (course of coursesInscription; track $index) {
+      <div class="list-course rounded-4 p-3 mb-2">
+        <div class="row align-items-center g-4">
+          <div class="col-auto">
+            <div class="icon">
+              <mat-icon>book</mat-icon>
+            </div>
+          </div>
+          <p appHeaderSize class="col-5 mb-0"><small class="title-small fw-medium">ID Curso: {{course.id}}</small>{{course.name}}</p>
+          <p class="col mb-0"><span class="title-small mb-1">Profesor Asignado:</span>{{course.teacher?.name}}</p>
+          <div class="col-auto ms-auto">
+            <button mat-icon-button>
+              <mat-icon>close</mat-icon>
+            </button>
           </div>
         </div>
-        <p appHeaderSize class="col-5 mb-0"><small class="title-small fw-medium">ID Curso: 1</small>Nombre Curso</p>
-        <p class="col mb-0"><span class="title-small mb-1">Profesor Asignado:</span>Nombre Profe</p>
-        <div class="col-auto ms-auto">
-          <button mat-icon-button>
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
       </div>
-    </div>
-
-    <div class="list-course rounded-4 p-3 mb-2">
-      <div class="row align-items-center g-4">
-        <div class="col-auto">
-          <div class="icon">
-            <mat-icon>book</mat-icon>
-          </div>
-        </div>
-        <p appHeaderSize class="col-5 mb-0"><small class="title-small fw-medium">ID Curso: 1</small>Nombre Curso</p>
-        <p class="col mb-0"><span class="title-small mb-1">Profesor Asignado:</span>Nombre Profe</p>
-        <div class="col-auto ms-auto">
-          <button mat-icon-button>
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
-      </div>
-    </div>
+    }
   </div>
 }
 

@@ -1,0 +1,119 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@mail.com",
+      "name": "Administrador",
+      "accessToken": "AakjdksaMNfjfpf123",
+      "password": "123456",
+      "address": "Rancagua norte #123",
+      "phone": "987654321",
+      "profile": "ADMIN"
+    },
+    {
+      "id": 2,
+      "email": "user@mail.com",
+      "name": "Usuario General",
+      "accessToken": "mdFnjosi0904Sj",
+      "password": "123456",
+      "address": "Italia #146",
+      "phone": "987654321",
+      "profile": "USER"
+    }
+  ],
+  "students": [
+    {
+      "id": "asd2",
+      "name": "John",
+      "lastName": "Doe",
+      "email": "john.doe@mail.com",
+      "phone": "+56999999999",
+      "profile": "Desarrollador",
+      "gender": "M"
+    },
+    {
+      "id": "2dbs",
+      "name": "Hannah",
+      "lastName": "Smith",
+      "email": "hsmith@mail.com",
+      "phone": "+56998765432",
+      "profile": "UI/UX",
+      "gender": "F"
+    },
+    {
+      "id": "a28f",
+      "name": "Katherine",
+      "lastName": "Droguett",
+      "email": "kdroguett.2@gmail.com",
+      "phone": "954303588",
+      "profile": "UI/UX",
+      "gender": "F"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "1",
+      "name": "Gastón Guzmán"
+    },
+    {
+      "id": "2",
+      "name": "Nicole Soto"
+    },
+    {
+      "id": "3",
+      "name": "Bautista Rojas"
+    }
+  ],
+  "courses": [
+    {
+      "id": "jav34i",
+      "name": "Javascript",
+      "hours": 40,
+      "nClasses": 20,
+      "teacherId": "1"
+    },
+    {
+      "id": "ange75",
+      "name": "Angular 19",
+      "hours": 46,
+      "nClasses": 23,
+      "teacherId": "1"
+    },
+    {
+      "id": "rxj23c",
+      "name": "RxJs",
+      "hours": 20,
+      "nClasses": 10,
+      "teacherId": "2"
+    },
+    {
+      "id": "fa4e",
+      "name": "CorelDraw",
+      "hours": 30,
+      "nClasses": 15,
+      "teacherId": "2"
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": 1,
+      "studentId": "asd2",
+      "courseId": "jav34i"
+    },
+    {
+      "id": 2,
+      "studentId": "asd2",
+      "courseId": "ange75"
+    },
+    {
+      "id": 3,
+      "studentId": "2dbs",
+      "courseId": "fa4e"
+    },
+    {
+      "id": 4,
+      "studentId": "2dbs",
+      "courseId": "jav34i"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { Inscription } from "../../inscriptions/models";
 import { Teacher } from "../../teachers/models/teacher";
 
 export interface Courses {
@@ -5,5 +6,6 @@ export interface Courses {
   name: string;
   hours: number;
   nClasses: number;
-  teacher: Teacher;
+  teacher?: Teacher;
+  inscriptions?: Inscription
 }

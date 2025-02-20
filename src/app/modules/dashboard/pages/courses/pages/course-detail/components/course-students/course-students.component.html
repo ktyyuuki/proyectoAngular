@@ -6,27 +6,15 @@
       <td mat-cell class="text-secondary" *matCellDef="let element"> {{ element | fullName}} </td>
     </ng-container>
 
-    <!-- Fecha Inscripcion -->
-    <ng-container matColumnDef="dateInscription">
-      <th mat-header-cell *matHeaderCellDef> Fecha Inscripción </th>
-      <td mat-cell class="text-secondary" *matCellDef="let element">  </td>
-    </ng-container>
-
-    <!-- Usuario responsable de la inscripción -->
-    <ng-container matColumnDef="user">
-      <th mat-header-cell *matHeaderCellDef> Usuario </th>
-      <td mat-cell class="text-secondary" *matCellDef="let element">  </td>
-    </ng-container>
-
     <!-- Edit Column -->
-    <ng-container matColumnDef="edit">
+    <!-- <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef width="5"> Editar </th>
       <td mat-cell *matCellDef="let element">
         <button title="edit" mat-icon-button class="text-secondary">
           <mat-icon>edit</mat-icon>
         </button>
       </td>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Delete Column -->
     <ng-container matColumnDef="delete">

@@ -1,11 +1,13 @@
+import { Inscription } from '../../inscriptions/models/index';
 export interface Student {
-  id: number;
+  id: string;
   name: string;
   lastName: string;
   email: string;
   phone: string;
   profile: Profile;
   gender: Sex;
+  inscriptions?: Inscription[]
 }
 
 // Definir los valores como constantes reutilizables

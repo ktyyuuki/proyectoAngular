@@ -9,7 +9,7 @@ import { Inscription } from '../../models';
   styleUrl: './inscriptions-table.component.scss'
 })
 export class InscriptionsTableComponent {
-  displayedColumns: string[] = ['id', 'studentIns', 'courseIns', 'date', 'user', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'studentIns', 'courseIns', 'edit', 'delete'];
 
   @Input()
   dataSource: Inscription[] = [];

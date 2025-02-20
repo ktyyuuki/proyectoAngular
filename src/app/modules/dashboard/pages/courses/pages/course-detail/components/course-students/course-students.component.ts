@@ -9,7 +9,7 @@ import { Student } from '../../../../../students/models';
   styleUrl: './course-students.component.scss'
 })
 export class CourseStudentsComponent {
-  displayedColumns: string[] = ['studentIns', 'dateInscription', 'user', 'edit', 'delete'];
+  displayedColumns: string[] = ['studentIns', 'delete'];
 
   @Input()
   dataSource: Student[] = [];

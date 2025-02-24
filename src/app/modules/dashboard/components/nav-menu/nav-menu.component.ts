@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { AuthService } from '../../../../core/services/auth.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectAuthUserAdmin } from '../../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-nav-menu',
@@ -13,8 +14,10 @@ export class NavMenuComponent implements OnInit{
   isAdmin$: Observable<boolean>;
   linkItems: {label:string, icon:string, routerLink: string}[] = [];
 
-  constructor(private authService: AuthService){
-    this.isAdmin$ = this.authService.authUser$.pipe(map((x) => x?.profile === 'ADMIN'));
+  constructor(
+    private store:Store
+  ){
+    this.isAdmin$ = this.store.select(selectAuthUserAdmin);
   }
 
   ngOnInit(): void {

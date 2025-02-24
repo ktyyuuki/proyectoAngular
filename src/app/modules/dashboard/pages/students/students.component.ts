@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Student, STUDENT_GENDER, STUDENT_PROFFILE } from './models';
-import { generateId } from '../../../../shared/utils';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentDialogComponent } from './components/student-dialog/student-dialog.component';
 import { StudentsService } from '../../../../core/services/students.service';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
-import { AuthService } from '../../../../core/services/auth.service';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectAuthUserAdmin, selectAuthUserProfile } from '../../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-students',
@@ -35,9 +34,9 @@ export class StudentsComponent implements OnInit, OnDestroy{
   constructor(
     private matDialog: MatDialog,
     private studentService: StudentsService,
-    private authService: AuthService
+    private store: Store
   ) {
-    this.isAdmin$ = this.authService.authUser$.pipe(map((x) => x?.profile === 'ADMIN'));
+    this.isAdmin$ = this.store.select(selectAuthUserAdmin);
   }
 
   ngOnInit(): void {

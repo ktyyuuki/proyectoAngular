@@ -30,6 +30,11 @@ const routes: Routes = [
     canActivate: [adminGuard],
     loadChildren: () =>
       import('./pages/users/users.module').then((m) => m.UsersModule)
+  },
+  {
+    path: 'counter',
+    loadChildren: () =>
+      import('./pages/counter/counter.module').then((m) => m.CounterModule)
   }
 ];
 

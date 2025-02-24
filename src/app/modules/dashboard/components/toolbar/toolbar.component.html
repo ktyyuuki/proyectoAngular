@@ -8,8 +8,8 @@
     <button class="btn btn-link dropdown-toggle user-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="person.jpg" width="50" class="img-fluid user-img" alt="user-img">
         <div class="mx-2 text-start">
-          <p class="mb-0">{{ authUser?.name }}</p>
-          <small>{{ authUser?.profile }}</small>
+          <p class="mb-0">{{authUserName$ | async}}</p>
+          <small>{{ authUserProfile$ | async }}</small>
         </div>
     </button>
     <ul class="dropdown-menu dropdown-menu-end border-0 shadow">

@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Courses } from '../../models';
 import { AuthService } from '../../../../../../core/services/auth.service';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectAuthUserAdmin } from '../../../../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-courses-table',
@@ -27,8 +29,10 @@ export class CoursesTableComponent implements OnInit, OnDestroy{
 
   private destroy$ = new Subject<void>();
 
-  constructor (private authService: AuthService){
-    this.isAdmin$ = this.authService.authUser$.pipe(map((x) => x?.profile === 'ADMIN'));
+  constructor (
+    private store:Store
+  ){
+    this.isAdmin$ = this.store.select(selectAuthUserAdmin);
   }
 
   getDisplayedColumns(isAdmin: boolean): string[] {

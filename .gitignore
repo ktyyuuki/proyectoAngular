@@ -40,3 +40,11 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+src/app/modules/dashboard/pages/counter/counter-routing.module.ts
+src/app/modules/dashboard/pages/counter/counter.component.html
+src/app/modules/dashboard/pages/counter/counter.component.scss
+src/app/modules/dashboard/pages/counter/counter.component.ts
+src/app/modules/dashboard/pages/counter/counter.module.ts
+src/app/store/counter/counter.actions.ts
+src/app/store/counter/counter.reducer.ts
+src/app/store/counter/counter.selectors.ts

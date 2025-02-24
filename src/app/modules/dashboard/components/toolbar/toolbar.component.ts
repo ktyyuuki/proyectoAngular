@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Observable } from 'rxjs';
 import { User } from '../../pages/users/models/user';
+import { Store } from '@ngrx/store';
+import { selectAuthUserName, selectAuthUserProfile } from '../../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,16 +14,15 @@ import { User } from '../../pages/users/models/user';
 })
 export class ToolbarComponent {
   @Output() drawerToggle = new EventEmitter;
-  authUser?: User | null;
+  authUserName$: Observable<string | undefined>;
+  authUserProfile$: Observable<string | undefined>;
 
-  constructor(private authService: AuthService){
-    this.authService.authUser$.subscribe({
-      next:(user) => {
-        this.authUser = user;
-        // console.log(user);
-      }
-    });
-    // console.log(this.authUser);
+  constructor(
+    private authService: AuthService,
+    private store: Store
+  ){
+    this.authUserName$ = this.store.select(selectAuthUserName);
+    this.authUserProfile$ = this.store.select(selectAuthUserProfile);
   }
 
   logout() : void{

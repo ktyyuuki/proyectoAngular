@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { LoginPayload } from '../../modules/auth/models';
 import { User } from '../../modules/dashboard/pages/users/models/user';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../../store/auth/auth.actions';
+import { selectAuthUser } from '../../store/auth/auth.selectors';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private _authUser$ = new BehaviorSubject<null | User>(null);
-  authUser$ = this._authUser$.asObservable();
+  authUser$ : Observable<User | null>;
 
-  constructor(private router: Router, private httpClient: HttpClient) { }
+  constructor(
+    private router: Router,
+    private httpClient: HttpClient,
+    private store: Store
+  ) {
+    this.authUser$ = this.store.select(selectAuthUser);
+  }
 
   login(payload: LoginPayload): void {
     this.httpClient.get<User[]>(`${environment.baseApiUrl}/users?email=${payload.email}&password=${payload.password}`).subscribe({
@@ -25,7 +33,8 @@ export class AuthService {
           return;
         } else {
           localStorage.setItem('access_token', usersResult[0].accessToken);
-          this._authUser$.next(usersResult[0]); // Actualiza el observable del usuario autenticado
+          // this._authUser$.next(usersResult[0]); // Actualiza el observable del usuario autenticado
+          this.store.dispatch(AuthActions.setAuthUser({user: usersResult[0]}));
         }
       },
       error: (err) => {
@@ -39,29 +48,12 @@ export class AuthService {
         this.router.navigate(['dashboard', 'home']);
       }
     })
-    // const loginResult = FAKE_USERS_DB.find(
-    //   (user) =>
-    //     user.email === payload.email && user.password === payload.password
-    // );
-
-    // if(!loginResult){
-    //   alert('Email y/o password inválidos');
-    //   return;
-    // }
-    // localStorage.setItem('access_token', loginResult.accessToken);
-    // this._authUser$.next(loginResult);
-    // // console.log(loginResult);
-    // this.router.navigate(['dashboard', 'home']);
   }
 
   isAuthenticated(): Observable<boolean> {
-    // const storageUser =  FAKE_USERS_DB.find(x => x.accessToken === localStorage.getItem('access_token'));
-    // this._authUser$.next(storageUser || null);
-
-    // return this.authUser$.pipe(map((x) => !!x))
     const accessToken = localStorage.getItem('access_token');
     if(!accessToken){
-      this._authUser$.next(null);
+      this.store.dispatch(AuthActions.unsetAuthUser());
       return of(false);
     }
 
@@ -71,8 +63,8 @@ export class AuthService {
           const userResult = res.length > 0 ? res[0] : null;
 
           if (userResult) {
-            // console.log(userResult);Z
-            this._authUser$.next(userResult);
+            this.store.dispatch(AuthActions.setAuthUser({user: userResult}));
+            // this._authUser$.next(userResult);
           }
           return !!userResult;
         })
@@ -81,7 +73,9 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('access_token');
-    this._authUser$.next(null);
+    // this._authUser$.next(null);
+    this.store.dispatch(AuthActions.unsetAuthUser());
     this.router.navigate(['auth', 'login']);
+
   }
 }

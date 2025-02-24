@@ -3,10 +3,11 @@ import { CoursesService } from '../../../../core/services/courses.service';
 import { Courses } from './models';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseFormDialogComponent } from './components/course-form-dialog/course-form-dialog.component';
-import { TeachersService } from '../../../../core/services/teachers.service';
 import { Teacher } from '../teachers/models/teacher';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth.service';
+import { Store } from '@ngrx/store';
+import { selectAuthUserAdmin } from '../../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-courses',
@@ -23,9 +24,9 @@ export class CoursesComponent implements OnInit {
   constructor(
     private coursesService: CoursesService,
     private matDialog: MatDialog,
-    private authService: AuthService
+    private store: Store
   ){
-    this.isAdmin$ = this.authService.authUser$.pipe(map((x) => x?.profile === 'ADMIN'));
+    this.isAdmin$ = this.store.select(selectAuthUserAdmin);
   }
 
   handleCoursesUpdate(data: Courses[]): void {

@@ -6,6 +6,8 @@ import { UsersComponent } from './users.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { UsersTableComponent } from './components/users-table/users-table.component';
 import { UserDialogFormComponent } from './components/user-dialog-form/user-dialog-form.component';
+import { StoreModule } from '@ngrx/store';
+import { userFeature } from './store/user.reducer';
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import { UserDialogFormComponent } from './components/user-dialog-form/user-dial
   imports: [
     CommonModule,
     UsersRoutingModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(userFeature)
   ]
 })
 export class UsersModule { }

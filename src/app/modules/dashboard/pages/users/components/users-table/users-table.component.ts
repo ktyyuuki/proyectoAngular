@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from '../../models/user';
 
 @Component({
@@ -12,5 +12,8 @@ export class UsersTableComponent {
   displayedColumns: string[] = ["id", "name", "email", "profile", "edit", "delete"]
   @Input()
   dataSource : User[] = [];
+
+  @Output()
+  delete = new EventEmitter<User['id']>();
 
 }

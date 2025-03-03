@@ -6,5 +6,6 @@ export interface User {
   password: string;
   address: string;
   phone: string;
-  profile: "ADMIN" | "USER";
+  // profile: "ADMIN" | "USER";
+  profile: string;
 }

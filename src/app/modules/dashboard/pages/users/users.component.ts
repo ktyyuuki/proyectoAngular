@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from './models/user';
 import { UsersService } from '../../../../core/services/users.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +14,7 @@ import { selectUsers } from './store/user.selectors';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent implements OnInit{
+export class UsersComponent implements OnInit, OnDestroy{
   dataSource : User[] = [];
   isLoading : boolean = false;
 
@@ -26,6 +26,10 @@ export class UsersComponent implements OnInit{
     private store: Store
   ){
     this.users$ = this.store.select(selectUsers);
+  }
+
+  ngOnDestroy(): void {
+    this.usersService.resetUserState();
   }
 
   ngOnInit(): void {
@@ -49,19 +53,56 @@ export class UsersComponent implements OnInit{
     // })
   }
 
-  openDialogForm(editUser?: User) : void {
-    this.matDialog.open(UserDialogFormComponent, {data: {editUser}})
+  openDialogForm(editingUser?: User) : void {
+    // if(editingUser){
+    //   console.log('Se va a editar: ', editingUser)
+    // }
+    this.matDialog
+    .open(UserDialogFormComponent, {data: {editingUser}})
     .afterClosed().subscribe({
-      next: () => {}
+      next: (data) => {
+        if(!!data) {
+          if(!!editingUser){
+            // editar
+            this.updateUser(editingUser.id, data);
+          } else {
+            // crear
+            this.addNewUser();
+          }
+        }
+      }
     })
   }
 
   addNewUser() : void {
     this.isLoading = true;
+    this.usersService.addUser();
 
   }
+  // addNewUser(data: {name: User['name'], email: User['id'], password: User['password'], profile: User['profile']}) : void {
+  //   this.isLoading = true;
+  //   this.usersService.addUser(data).subscribe({
+  //     next: (newuser) => {
+  //       this.dataSource = [...newuser];
+  //     },
+  //     error: () => (this.isLoading = false),
+  //     complete: () => (this.isLoading = false)
+  //   })
 
-  updateUser(userId: User['id']) : void {}
+  // }
+
+  updateUser(userId: User['id'], data: Partial<User> ) : void {
+    this.isLoading = true;
+    this.usersService.updateUserById(userId, data);
+
+    // this.usersService.updateUserById(userId, data).subscribe({
+    //   next: (updatedUser) => {
+    //     this.dataSource = [...updatedUser];
+    //   },
+    //   error: () => this.isLoading = false,
+    //   complete: () => this.isLoading = false
+    // })
+  }
 
   deleteUserById(id: User['id']) : void {
     this.usersService.deleteUserById(id);

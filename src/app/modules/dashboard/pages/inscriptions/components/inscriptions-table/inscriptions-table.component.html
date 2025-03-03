@@ -9,13 +9,13 @@
     <!-- Estudiante -->
     <ng-container matColumnDef="studentIns">
       <th mat-header-cell *matHeaderCellDef> Estudiante Inscrito </th>
-      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.student | fullName}} </td>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.studentId }} | {{ element.student?.name }} </td>
     </ng-container>
 
     <!-- Curso -->
     <ng-container matColumnDef="courseIns">
       <th mat-header-cell *matHeaderCellDef> Curso Inscrito </th>
-      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.course.name}} </td>
+      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.courseId}} | {{ element.course?.name }} </td>
     </ng-container>
 
     <!-- Fecha Inscripcion -->

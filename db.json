@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "email": "admin@mail.com",
       "name": "Administrador",
       "accessToken": "AakjdksaMNfjfpf123",
@@ -11,14 +11,23 @@
       "profile": "ADMIN"
     },
     {
-      "id": 2,
+      "id": "2",
       "email": "user@mail.com",
-      "name": "Usuario General",
+      "name": "User1",
       "accessToken": "mdFnjosi0904Sj",
       "password": "123456",
       "address": "Italia #146",
       "phone": "987654321",
-      "profile": "USER"
+      "profile": "perfil2"
+    },
+    {
+      "id": "baec",
+      "name": "new",
+      "email": "new@mail.com",
+      "password": "123123",
+      "address": "address",
+      "phone": "954303588",
+      "profile": "perfil2"
     }
   ],
   "students": [
@@ -100,22 +109,22 @@
   ],
   "inscriptions": [
     {
-      "id": 1,
+      "id": "1",
       "studentId": "asd2",
       "courseId": "jav34i"
     },
     {
-      "id": 2,
+      "id": "2",
       "studentId": "asd2",
       "courseId": "ange75"
     },
     {
-      "id": 3,
+      "id": "3",
       "studentId": "2dbs",
       "courseId": "fa4e"
     },
     {
-      "id": 4,
+      "id": "4",
       "studentId": "2dbs",
       "courseId": "jav34i"
     }

@@ -28,7 +28,7 @@
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef width="5"> Editar </th>
       <td mat-cell *matCellDef="let element">
-        <button title="edit" mat-icon-button class="text-secondary">
+        <button title="edit" (click)="edit.emit(element)" mat-icon-button class="text-secondary">
           <mat-icon>edit</mat-icon>
         </button>
       </td>

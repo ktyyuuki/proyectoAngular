@@ -28,7 +28,7 @@ export class CoursesService {
       );
   }
 
-  updateCourseById(id: string, data: {name: string}): Observable<Courses[]> {
+  updateCourseById(id: string, data: Partial<Courses>): Observable<Courses[]> {
     return (
       this.httpClient.patch<Courses>(`${environment.baseApiUrl}/courses/${id}`, data)
       .pipe(concatMap(() => this.getCourses()))

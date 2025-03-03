@@ -2,7 +2,7 @@
   <h1 class="fw-bold fs-2">Usuarios</h1>
 
   @if (!isLoading) {
-    <button title="add" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
+    <button title="add" (click)="openDialogForm()" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
       <mat-icon>add</mat-icon>
       Nuevo Usuario
     </button>
@@ -11,5 +11,5 @@
 @if (isLoading) {
   <mat-spinner></mat-spinner>
 } @else {
-  <app-users-table [dataSource]="dataSource" (delete)="deleteUserById($event)"/>
+  <app-users-table [dataSource]="dataSource" (delete)="deleteUserById($event)" (edit)="openDialogForm($event)"/>
 }

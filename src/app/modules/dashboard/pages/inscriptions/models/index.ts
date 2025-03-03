@@ -5,4 +5,6 @@ export interface Inscription {
   id: string,
   studentId?: Student['id'],
   courseId?: Courses['id'],
+  course?: Courses,
+  student?: Student,
 }

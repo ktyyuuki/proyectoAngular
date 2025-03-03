@@ -1,2 +1,49 @@
-<p>user-dialog-form works!</p>
+<h3 appHeaderSize mat-dialog-title class="fw-bold text-center my-3">{{title}}</h3>
+
+<div mat-dialog-content class="pt-3">
+  <form [formGroup]="userForm">
+    <div class="row">
+      <mat-form-field class="col-12" appearance="outline">
+        <mat-label for="">Nombre</mat-label>
+        <input type="text" formControlName="name" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col-12" appearance="outline">
+        <mat-label for="">E-mail</mat-label>
+        <input type="email" formControlName="email" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col-12" appearance="outline">
+        <mat-label for="">Dirección</mat-label>
+        <input type="text" formControlName="address" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col-lg-6" appearance="outline">
+        <mat-label for="">Teléfono</mat-label>
+        <input type="tel" formControlName="phone" matInput>
+      </mat-form-field>
+
+      <mat-form-field class="col-lg-6" appearance="outline">
+        <mat-label>Perfil</mat-label>
+        <mat-select formControlName="profile">
+          <!-- @for (teacher of teachers; track $index) { -->
+            <mat-option value="perfil1">Perfil</mat-option>
+            <mat-option value="perfil2">Perfil 2</mat-option>
+          <!-- } -->
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="col-12" appearance="outline">
+        <mat-label for="">Contraseña</mat-label>
+        <input type="password" formControlName="password" matInput>
+      </mat-form-field>
+
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-stroked-button mat-dialog-close class="text-secondary">Cancelar</button>
+  <button mat-flat-button (click)="onSubmit()" class="btn-color-primary">Confirmar</button>
+</div>
 

@@ -1,1 +1,43 @@
-<p>home works!</p>
+<h1 class="fw-bold fs-2 mb-4">Bienvenido!</h1>
+
+<div class="row cards-home">
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-inline-flex align-items-center">
+          <mat-icon class="me-3">groups</mat-icon>
+          <p><span class="d-block">Estudiantes:</span>{{ nStudents }}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a routerLink="/dashboard/students" mat-flat-button class="stretched-link btn-color-primary w-100">Ir a Estudiantes</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-inline-flex align-items-center">
+          <mat-icon class="me-3">book</mat-icon>
+          <p><span class="d-block">Cursos:</span>{{ nCourses }}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a routerLink="/dashboard/courses" mat-flat-button class="stretched-link btn-color-primary w-100">Ir a Cursos</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-inline-flex align-items-center">
+          <mat-icon class="me-3">school</mat-icon>
+          <p><span class="d-block">Inscripciones:</span>{{ nInscriptions }}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a routerLink="/dashboard/inscriptions" mat-flat-button class="stretched-link btn-color-primary w-100">Ir a Inscripciones</a>
+      </div>
+    </div>
+  </div>
+</div>

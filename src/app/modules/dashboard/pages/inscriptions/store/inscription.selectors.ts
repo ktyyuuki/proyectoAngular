@@ -9,3 +9,13 @@ export const selectInscriptions = createSelector(
   selectInscriptionState,
   (state) => state.inscriptions
 )
+
+export const selectIsLoadingInscriptions = createSelector(
+  selectInscriptionState,
+  (state) => state.isLoading
+)
+
+export const selectInscriptionError = createSelector(
+  selectInscriptionState,
+  (state) => state.error
+)

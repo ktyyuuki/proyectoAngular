@@ -6,10 +6,14 @@ export const inscriptionFeatureKey = 'inscription';
 
 export interface State {
   inscriptions: Inscription[];
+  isLoading: boolean;
+  error: unknown;
 }
 
 export const initialState: State = {
   inscriptions: [],
+  isLoading: false,
+  error: null,
 };
 
 export const reducer = createReducer(
@@ -17,30 +21,48 @@ export const reducer = createReducer(
   on(InscriptionActions.loadInscriptions, (state) => {
     return {
       ...state,
-      inscriptions: [
-        {
-          id: "1",
-          studentId: "asd2",
-          courseId: "jav34i",
-
-        },
-        {
-          id: "2",
-          studentId: "asd2",
-          courseId: "ange75"
-        },
-      ]
+      isLoading: true,
     }
   }),
-  on(InscriptionActions.createInscription, (state, action) => {
+  on(InscriptionActions.loadInscriptionsSuccess, (state, action) => {
+    return {
+      ...state,
+      inscriptions: action.data,
+      isLoading: false,
+      error: null,
+    }
+  }),
+  on(InscriptionActions.loadInscriptionsFailure, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: action.error,
+    }
+  }),
+
+  on(InscriptionActions.createInscription, (state) => {
     return{
       ...state,
-      inscriptions: [...state.inscriptions, { id: 'adse', ...action.data }]
+      isLoading: true,
+    }
+  }),
+  on(InscriptionActions.createInscriptionSuccess, (state, action) => {
+    return{
+      ...state,
+      isLoading: false,
+      error: null,
+      inscriptions: [...state.inscriptions, action.data]
+    }
+  }),
+  on(InscriptionActions.createInscriptionFailure, (state, action) => {
+    return{
+      ...state,
+      isLoading: false,
+      error: action.error,
     }
   }),
 
-  on(InscriptionActions.loadInscriptionsSuccess, (state, action) => state),
-  on(InscriptionActions.loadInscriptionsFailure, (state, action) => state),
+
   on(InscriptionActions.resetState, () => initialState),
 );
 

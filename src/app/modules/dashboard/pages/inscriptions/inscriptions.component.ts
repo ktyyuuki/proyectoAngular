@@ -8,7 +8,8 @@ import { Courses } from '../courses/models';
 import { forkJoin, Observable, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { InscriptionActions } from './store/inscription.actions';
-import { selectInscriptions } from './store/inscription.selectors';
+import { selectInscriptionError, selectInscriptions, selectIsLoadingInscriptions } from './store/inscription.selectors';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-inscriptions',
@@ -18,21 +19,32 @@ import { selectInscriptions } from './store/inscription.selectors';
   styleUrl: './inscriptions.component.scss'
 })
 export class InscriptionsComponent implements OnInit, OnDestroy {
-  isLoading = false;
-  dataSource : Inscription[] = [];
-
   inscriptions$: Observable<Inscription[]>;
+  isLoading$: Observable<boolean>;
+
+  dataSource : Inscription[] = [];
+  error$: Observable<unknown>;
 
   students : Student[] = [];
   courses: Courses[] = [];
+
+  inscriptionForm: FormGroup;
 
   constructor(
     private store: Store,
     // private inscriptionService: InscriptionsService,
     private coursesService: CoursesService,
-    private studentService: StudentsService
+    private studentService: StudentsService,
+    private fb: FormBuilder,
   ){
     this.inscriptions$ = this.store.select(selectInscriptions);
+    this.isLoading$ = this.store.select(selectIsLoadingInscriptions);
+    this.error$ = this.store.select(selectInscriptionError);
+
+    this.inscriptionForm = this.fb.group({
+      studentId:[null, [Validators.required]],
+      courseId: [null, [Validators.required]]
+    })
   }
 
   ngOnDestroy(): void {
@@ -41,16 +53,18 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.store.dispatch(InscriptionActions.loadInscriptions());
 
     this.inscriptions$.pipe(
       tap((inscription) => {
         this.dataSource = [...inscription];
         console.log(this.dataSource);
-        this.isLoading = false;
+        // this.isLoading = false;
       })
     ).subscribe();
+
+    this.loadStudentsAndCourses();
 
     // this.inscriptions$.subscribe({
     //   next: (inscriptions) => {
@@ -88,7 +102,13 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit() : void{}
+  onSubmit() : void{
+    if(this.inscriptionForm.invalid){
+      this.inscriptionForm.markAllAsTouched();
+    } else {
+      this.store.dispatch(InscriptionActions.createInscription({ data: this.inscriptionForm.value }))
+    }
+  }
 
 
 }

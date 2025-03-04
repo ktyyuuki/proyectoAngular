@@ -2,50 +2,52 @@
   <h2 class="fw-bold fs-2 mb-4">Inscripciones</h2>
 
   <!-- @if (!isLoading) { -->
-    <button title="add" (click)="createInscription()" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
+    <!-- <button title="add" (click)="createInscription()" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
       <mat-icon>add</mat-icon>
       Nueva Inscripción
-    </button>
+    </button> -->
   <!-- } -->
 </div>
 
- @if (isLoading) {
+ @if (isLoading$ | async) {
   <div class="py-5">
     <mat-spinner class="mx-auto"/>
   </div>
  } @else {
-  <div class="bg-light p-3 rounded-3 mb-4">
-    <p class="fw-bold">Asignar nueva inscripción</p>
-    <form action="">
-      <div class="row align-items-end">
-        <mat-form-field class="col-md-6 mb-0" appearance="outline">
-          <mat-label for="">Estudiante</mat-label>
-          <mat-select formControlName="">
-            <!-- @for (student of students; track $index) {
-              <mat-option [value]="student.id">{{student | fullName}}</mat-option>
-            } -->
-            <mat-option [value]="">Estudiante</mat-option>
-          </mat-select>
-        </mat-form-field>
+    @if(error$ | async){
+      <p class="fs-4 fw-semibold">Ha ocurrido un error inesperado</p>
+    } @else {
+      <div class="bg-light p-3 rounded-3 mb-4">
+        <p class="fw-bold">Asignar nueva inscripción</p>
+        <form action="" [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
+          <div class="row align-items-end">
+            <mat-form-field class="col-md-6 mb-0" appearance="outline">
+              <mat-label for="">Estudiante</mat-label>
+              <mat-select formControlName="studentId">
+                @for (student of students; track $index) {
+                  <mat-option [value]="student.id">{{ student | fullName }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
 
-        <mat-form-field class="col-md-6 mb-0" appearance="outline">
-          <mat-label for="">Curso</mat-label>
-          <mat-select formControlName="">
-            <!-- @for (student of students; track $index) {
-              <mat-option [value]="student.id">{{student | fullName}}</mat-option>
-            } -->
-            <mat-option [value]="">Cursos</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div class="col-12 text-end">
-          <button type="submit" mat-flat-button class="btn-color-primary text-uppercase"><mat-icon>add</mat-icon> Asignar Inscripción</button>
-        </div>
+            <mat-form-field class="col-md-6 mb-0" appearance="outline">
+              <mat-label for="">Curso</mat-label>
+              <mat-select formControlName="courseId">
+                @for (course of courses; track $index) {
+                  <mat-option [value]="course.id">{{ course.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <div class="col-12 text-end">
+              <button type="submit" mat-flat-button class="btn-color-primary text-uppercase"><mat-icon>add</mat-icon> Asignar Inscripción</button>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
 
-    <app-inscriptions-table
-     [dataSource]="dataSource"
-   />
+      <app-inscriptions-table
+        [dataSource]="dataSource"
+       />
+    }
  }
 

@@ -8,6 +8,7 @@ import { UsersTableComponent } from './components/users-table/users-table.compon
 import { UserDialogFormComponent } from './components/user-dialog-form/user-dialog-form.component';
 import { StoreModule } from '@ngrx/store';
 import { userFeature } from './store/user.reducer';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { userFeature } from './store/user.reducer';
     CommonModule,
     UsersRoutingModule,
     SharedModule,
-    StoreModule.forFeature(userFeature)
+    StoreModule.forFeature(userFeature),
+    EffectsModule.forFeature([]),
   ]
 })
 export class UsersModule { }

@@ -20,10 +20,6 @@ export class StudentsComponent implements OnInit, OnDestroy{
   students: Student[] = [];
   isAdmin$: Observable<boolean>;
 
-  //Opciones del form
-  profiles = STUDENT_PROFFILE;
-  genders = STUDENT_GENDER;
-
   editingStudentId: number | null = null;
 
   isLoading = false;

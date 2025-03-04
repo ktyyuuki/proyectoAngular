@@ -17,40 +17,24 @@ export class UsersService {
     return this.httpClient.get<User[]>(`${environment.baseApiUrl}/users`).pipe(delay(1000));
   }
 
-  // addUser(payload: {name: User['name'], email: User['email'], password: User['password'], profile: User['profile']}): Observable<User[]> {
-  //   return (
-  //     this.httpClient.post<User>(`${environment.baseApiUrl}/users`, payload)
-  //     .pipe(concatMap(() => this.getUsers()))
-  //   );
+  addUser(payload: Omit<User, 'id'>): Observable<User> {
+    return (
+      this.httpClient.post<User>(`${environment.baseApiUrl}/users`, payload)
+    );
+  }
+
+  // updateUserById(id: User['id'], data: Partial<User>): void {
+  //   this.store.dispatch(UserActions.updateUserById({id, data}));
   // }
-  addUser(): void {
-    this.store.dispatch(UserActions.addUser({
-      user: {
-        email: "neww@mail.com",
-        name: "new user",
-        accessToken: "AakjdksaMdasdaedf345",
-        password: "123456",
-        address: "address",
-        phone: "987654321",
-        profile: "Otro"
-      }
-    }));
+  updateUserById(id: User['id'], data: Partial<User>): Observable<User> {
+    return this.httpClient.patch<User>(`${environment.baseApiUrl}/users/${id}`, data);
   }
 
-  updateUserById(id: User['id'], data: Partial<User>): void {
-    this.store.dispatch(UserActions.updateUserById({id, data}));
-  }
-  // updateUserById(id: User['id'], data: Partial<User>): Observable<User[]> {
-  //   return (
-  //     this.httpClient.patch<User>(`${environment.baseApiUrl}/users/${id}`, data).pipe(concatMap(() => this.getUsers()))
-  //   )
-  // }
-
-  deleteUserById(id: User['id']): void{
-    this.store.dispatch(UserActions.deleteUserById({ id }));
+  deleteUserById(id: User['id']): Observable<User[]>{
+    return (
+      this.httpClient.delete<User>(`${environment.baseApiUrl}/users/${id}`)
+      .pipe(concatMap(() => this.getUsers()))
+    )
   }
 
-  resetUserState(): void {
-    this.store.dispatch(UserActions.resetState());
-  }
 }

@@ -6,6 +6,9 @@ export interface User {
   password: string;
   address: string;
   phone: string;
-  // profile: "ADMIN" | "USER";
-  profile: string;
+  profile: Profile;
+  // profile: string;
 }
+
+export type Profile = "ADMIN" | "USER";
+export const USER_PROFILE: Profile[] = ['ADMIN', 'USER'];

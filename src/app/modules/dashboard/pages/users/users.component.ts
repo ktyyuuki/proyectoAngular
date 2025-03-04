@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from './models/user';
+import { User, USER_PROFILE } from './models/user';
 import { UsersService } from '../../../../core/services/users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogFormComponent } from './components/user-dialog-form/user-dialog-form.component';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { selectIsLoadingtUsers, selectUsers, selectUsersError } from './store/user.selectors';
 import { UserActions } from './store/user.actions';
 
@@ -21,7 +21,6 @@ export class UsersComponent implements OnInit, OnDestroy{
 
   dataSource : User[] = [];
   error$: Observable<unknown>;
-  private subscription = new Subscription();
 
   constructor(
     private usersService: UsersService,
@@ -34,7 +33,6 @@ export class UsersComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
     this.store.dispatch(UserActions.resetState());
   }
 
@@ -71,45 +69,25 @@ export class UsersComponent implements OnInit, OnDestroy{
             this.updateUser(editingUser.id, data);
           } else {
             // crear
-            this.addNewUser();
+            this.addNewUser(data);
           }
         }
       }
     })
   }
 
-  addNewUser() : void {
-    // this.isLoading = true;
-    this.usersService.addUser();
-
+  addNewUser(user: Omit<User, 'id'>) : void {
+    this.store.dispatch(UserActions.addUser({user}));
   }
-  // addNewUser(data: {name: User['name'], email: User['id'], password: User['password'], profile: User['profile']}) : void {
-  //   this.isLoading = true;
-  //   this.usersService.addUser(data).subscribe({
-  //     next: (newuser) => {
-  //       this.dataSource = [...newuser];
-  //     },
-  //     error: () => (this.isLoading = false),
-  //     complete: () => (this.isLoading = false)
-  //   })
 
-  // }
-
-  updateUser(userId: User['id'], data: Partial<User> ) : void {
-    // this.isLoading = true;
-    this.usersService.updateUserById(userId, data);
-
-    // this.usersService.updateUserById(userId, data).subscribe({
-    //   next: (updatedUser) => {
-    //     this.dataSource = [...updatedUser];
-    //   },
-    //   error: () => this.isLoading = false,
-    //   complete: () => this.isLoading = false
-    // })
+  updateUser(id: User['id'], data: Partial<User>) : void {
+    this.store.dispatch(UserActions.updateUserById({id, data}));
   }
 
   deleteUserById(id: User['id']) : void {
-    this.usersService.deleteUserById(id);
+    if(confirm("¿Estás seguro que deseas eliminar este usuario?")){
+      this.store.dispatch(UserActions.deleteUserById({id}));
+    }
   }
 
 

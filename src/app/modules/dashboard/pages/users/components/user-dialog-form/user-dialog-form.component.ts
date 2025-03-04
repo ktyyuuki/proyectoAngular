@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from '../../models/user';
+import { User, USER_PROFILE } from '../../models/user';
 
 interface UserFormDialogData {
   editingUser?: User;
@@ -18,6 +18,9 @@ export class UserDialogFormComponent{
   userForm: FormGroup;
   title: string = "Crear Nuevo Usuario";
   isEditing: boolean = false;
+
+  // Opciones del form
+  profiles = USER_PROFILE;
 
   constructor (
     private fb: FormBuilder,

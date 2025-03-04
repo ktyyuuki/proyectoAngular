@@ -13,21 +13,21 @@
     {
       "id": "2",
       "email": "user@mail.com",
-      "name": "User1",
+      "name": "User",
       "accessToken": "mdFnjosi0904Sj",
       "password": "123456",
       "address": "Italia #146",
       "phone": "987654321",
-      "profile": "perfil2"
+      "profile": "USER"
     },
     {
-      "id": "baec",
-      "name": "new",
-      "email": "new@mail.com",
-      "password": "123123",
-      "address": "address",
-      "phone": "954303588",
-      "profile": "perfil2"
+      "id": "31a2",
+      "name": "new user",
+      "email": "new@email.com",
+      "password": "123123123",
+      "address": "addresss",
+      "phone": "123123123",
+      "profile": "USER"
     }
   ],
   "students": [
@@ -55,7 +55,7 @@
       "lastName": "Droguett",
       "email": "kdroguett.2@gmail.com",
       "phone": "954303588",
-      "profile": "UI/UX",
+      "profile": "Otro",
       "gender": "F"
     }
   ],

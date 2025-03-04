@@ -87,7 +87,8 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
     if(this.inscriptionForm.invalid){
       this.inscriptionForm.markAllAsTouched();
     } else {
-      this.store.dispatch(InscriptionActions.createInscription({ data: this.inscriptionForm.value }))
+      this.store.dispatch(InscriptionActions.createInscription({ data: this.inscriptionForm.value }));
+      this.inscriptionForm.reset();
     }
   }
 
@@ -121,6 +122,4 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
       this.store.dispatch(InscriptionActions.deleteInscriptionById({id}));
     }
   }
-
-
 }

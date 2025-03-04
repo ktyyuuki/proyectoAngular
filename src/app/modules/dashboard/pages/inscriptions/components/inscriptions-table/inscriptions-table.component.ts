@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Inscription } from '../../models';
 
 @Component({
@@ -13,4 +13,10 @@ export class InscriptionsTableComponent {
 
   @Input()
   dataSource: Inscription[] = [];
+
+  @Output()
+  edit = new EventEmitter<Inscription>();
+
+  @Output()
+  delete = new EventEmitter<Inscription['id']>();
 }

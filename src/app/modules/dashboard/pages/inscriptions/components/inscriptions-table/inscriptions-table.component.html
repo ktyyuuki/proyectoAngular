@@ -18,12 +18,6 @@
       <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.courseId}} | {{ element.course.name }} </td>
     </ng-container>
 
-    <!-- Fecha Inscripcion -->
-    <!-- <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef> Fecha Inscripción </th>
-      <td mat-cell class="text-secondary" *matCellDef="let element"> {{element.date}} </td>
-    </ng-container> -->
-
     <!-- User -->
     <!-- <ng-container matColumnDef="user">
       <th mat-header-cell *matHeaderCellDef> Usuario Responsable </th>
@@ -34,28 +28,17 @@
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef width="5"> Editar </th>
       <td mat-cell *matCellDef="let element">
-        <button title="edit" mat-icon-button class="text-secondary">
+        <button title="edit" (click)="edit.emit(element)" mat-icon-button class="text-secondary">
           <mat-icon>edit</mat-icon>
         </button>
       </td>
     </ng-container>
 
-    <!-- View Column -->
-    <!-- <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef width="5"> Detalle </th>
-      <td mat-cell *matCellDef="let element">
-        <button title="view" mat-icon-button
-          class="text-secondary">
-          <mat-icon>visibility</mat-icon>
-        </button>
-      </td>
-    </ng-container> -->
-
     <!-- Delete Column -->
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef width="5"> Borrar </th>
       <td mat-cell *matCellDef="let element">
-        <button title="delete" mat-icon-button class="text-secondary">
+        <button title="delete" (click)="delete.emit(element.id)" mat-icon-button class="text-secondary">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

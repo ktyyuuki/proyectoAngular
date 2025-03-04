@@ -1,0 +1,31 @@
+<h3 appHeaderSize mat-dialog-title class="fw-bold text-center my-3">Editar Inscripción</h3>
+
+<div mat-dialog-content class="pt-3">
+  <form [formGroup]="editInscriptionForm">
+    <div class="row">
+      <mat-form-field class="col-12 mb-0" appearance="outline">
+        <mat-label for="">Estudiante</mat-label>
+        <mat-select formControlName="studentId">
+          @for (student of students; track $index) {
+            <mat-option [value]="student.id">{{ student | fullName }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="col-12 mb-0" appearance="outline">
+        <mat-label for="">Curso</mat-label>
+        <mat-select formControlName="courseId">
+          @for (course of courses; track $index) {
+            <mat-option [value]="course.id">{{ course.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-stroked-button mat-dialog-close class="text-secondary">Cancelar</button>
+  <button mat-flat-button (click)="onSubmit()" class="btn-color-primary">Confirmar</button>
+</div>
+

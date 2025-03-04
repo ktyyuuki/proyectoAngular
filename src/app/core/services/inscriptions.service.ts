@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Inscription } from '../../modules/dashboard/pages/inscriptions/models';
-import { delay, Observable } from 'rxjs';
+import { concatMap, delay, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
@@ -18,5 +18,18 @@ export class InscriptionsService {
 
   createInscription(data: Omit<Inscription, 'id'>): Observable<Inscription> {
     return this.httpClient.post<Inscription>(`${environment.baseApiUrl}/inscriptions`, data);
+  }
+
+  updateInscriptionById(id: Inscription['id'], data: Partial<Inscription>): Observable<Inscription> {
+    return (
+      this.httpClient.patch<Inscription>(`${environment.baseApiUrl}/inscriptions/${id}`, data)
+    )
+  }
+
+  deleteInscriptionById(id: Inscription['id']): Observable<Inscription[]>{
+    return (
+      this.httpClient.delete<Inscription>(`${environment.baseApiUrl}/inscriptions/${id}`)
+        .pipe(concatMap(() => this.getInscriptions()))
+    )
   }
 }

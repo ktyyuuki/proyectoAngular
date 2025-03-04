@@ -47,6 +47,8 @@
 
       <app-inscriptions-table
         [dataSource]="dataSource"
+        (delete)="deleteInscriptionById($event)"
+        (edit)="openEditDialogForm($event)"
        />
     }
  }

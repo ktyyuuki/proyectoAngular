@@ -9,12 +9,14 @@ import { StoreModule } from '@ngrx/store';
 import { inscriptionFeature } from './store/inscription.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { InscriptionEffects } from './store/inscription.effects';
+import { InscriptionEditFormComponent } from './components/inscription-edit-form/inscription-edit-form.component';
 
 
 @NgModule({
   declarations: [
     InscriptionsComponent,
-    InscriptionsTableComponent
+    InscriptionsTableComponent,
+    InscriptionEditFormComponent
   ],
   imports: [
     CommonModule,

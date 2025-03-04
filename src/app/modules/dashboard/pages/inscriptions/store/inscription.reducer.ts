@@ -62,6 +62,51 @@ export const reducer = createReducer(
     }
   }),
 
+  on(InscriptionActions.updateInscriptionById, (state) => {
+    return{
+      ...state,
+      isLoading: true,
+    }
+  }),
+  on(InscriptionActions.updateInscriptionByIdSuccess, (state, action) => {
+    return{
+      ...state,
+      isLoading: false,
+      error: null,
+      inscriptions: state.inscriptions.map(
+        (inscription) => inscription.id === action.data.id ? {...inscription, ...action.data} : inscription
+      )
+    }
+  }),
+  on(InscriptionActions.updateInscriptionByIdFailure, (state, action) => {
+    return{
+      ...state,
+      isLoading: false,
+      error: action.error,
+    }
+  }),
+
+  on(InscriptionActions.deleteInscriptionById, (state) => {
+    return{
+      ...state,
+      isLoading: true,
+    }
+  }),
+  on(InscriptionActions.deleteInscriptionByIdSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: null,
+      inscriptions: state.inscriptions.filter((inscription) => inscription.id !== action.id),
+    }
+  }),
+  on(InscriptionActions.deleteInscriptionByIdFailure, (state, action) => {
+    return{
+      ...state,
+      isLoading: false,
+      error: action.error,
+    }
+  }),
 
   on(InscriptionActions.resetState, () => initialState),
 );

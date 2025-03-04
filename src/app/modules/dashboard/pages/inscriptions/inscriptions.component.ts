@@ -10,6 +10,8 @@ import { Store } from '@ngrx/store';
 import { InscriptionActions } from './store/inscription.actions';
 import { selectInscriptionError, selectInscriptions, selectIsLoadingInscriptions } from './store/inscription.selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { InscriptionEditFormComponent } from './components/inscription-edit-form/inscription-edit-form.component';
 
 @Component({
   selector: 'app-inscriptions',
@@ -35,6 +37,7 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
     // private inscriptionService: InscriptionsService,
     private coursesService: CoursesService,
     private studentService: StudentsService,
+    private matDialog: MatDialog,
     private fb: FormBuilder,
   ){
     this.inscriptions$ = this.store.select(selectInscriptions);
@@ -65,28 +68,6 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
     ).subscribe();
 
     this.loadStudentsAndCourses();
-
-    // this.inscriptions$.subscribe({
-    //   next: (inscriptions) => {
-    //     this.dataSource = [...inscriptions];
-    //     console.log(this.dataSource);
-    //   }
-    // });
-
-    // this.inscriptionService.getInscriptions().subscribe({
-    //   next: (data) => { this.dataSource = [...data] },
-    //   error: () => { this.isLoading = false },
-    //   complete: () => { this.isLoading = false }
-    // })
-  }
-
-  createInscription() : void {
-    this.store.dispatch(InscriptionActions.createInscription({
-      data: {
-        courseId: 'fa4e',
-        studentId: '2dbs',
-      }
-    }));
   }
 
 
@@ -107,6 +88,37 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
       this.inscriptionForm.markAllAsTouched();
     } else {
       this.store.dispatch(InscriptionActions.createInscription({ data: this.inscriptionForm.value }))
+    }
+  }
+
+  openEditDialogForm(editInscription: Inscription): void{
+    // if(editInscription){
+    //   console.log('Se va a editar: ', editInscription);
+    // }
+    this.matDialog
+    .open(InscriptionEditFormComponent, {
+      data: {
+        editInscription,
+        students: this.students,
+        courses: this.courses,
+      }
+    })
+    .afterClosed().subscribe({
+      next: (data) => {
+        if(!!data){
+          this.editInscription(editInscription.id, data);
+        }
+      }
+    })
+  }
+
+  editInscription(id: Inscription['id'], data: Partial<Inscription>): void {
+    this.store.dispatch(InscriptionActions.updateInscriptionById({id, data}));
+  }
+
+  deleteInscriptionById(id: Inscription['id']): void{
+    if (confirm("¿Estas seguro que deseas eliminar esta inscripción?")){
+      this.store.dispatch(InscriptionActions.deleteInscriptionById({id}));
     }
   }
 

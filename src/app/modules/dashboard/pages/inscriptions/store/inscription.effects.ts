@@ -6,6 +6,7 @@ import { InscriptionActions } from './inscription.actions';
 import { InscriptionsService } from '../../../../../core/services/inscriptions.service';
 import { StudentsService } from '../../../../../core/services/students.service';
 import { CoursesService } from '../../../../../core/services/courses.service';
+import { Inscription } from '../models/index';
 
 
 @Injectable()
@@ -48,8 +49,8 @@ export class InscriptionEffects {
   createInscription$ = createEffect(() =>
     this.actions$.pipe(
       ofType(InscriptionActions.createInscription),
-      concatMap(({ data }) =>
-        this.inscriptionsService.createInscription(data).pipe(
+      concatMap((action) =>
+        this.inscriptionsService.createInscription(action.data).pipe(
           concatMap((newInscription) =>
             forkJoin([
               this.studentsService.getStudentById(newInscription.studentId || ''),
@@ -68,6 +69,43 @@ export class InscriptionEffects {
     )
   );
 
+  updateInscriptionById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(InscriptionActions.updateInscriptionById),
+      concatMap((action) =>
+        this.inscriptionsService.updateInscriptionById(action.id, action.data).pipe(
+          concatMap((updatedInscription) =>
+            forkJoin([
+              this.studentsService.getStudentById(updatedInscription.studentId || ''),
+              this.coursesService.getCourseById(updatedInscription.courseId || '')
+            ]).pipe(
+              map(([student, course]) =>
+                InscriptionActions.updateInscriptionByIdSuccess({
+                  data: { ...updatedInscription, student, course }
+                })
+              )
+            )
+          ),
+          catchError((error) => of(InscriptionActions.updateInscriptionByIdFailure({ error })))
+        )
+      )
+    );
+  });
+
+
+  deleteInscriptionById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(InscriptionActions.deleteInscriptionById),
+      concatMap((action) =>
+        this.inscriptionsService.deleteInscriptionById(action.id).pipe(
+          //Si el servicio responde ok
+          map(() => InscriptionActions.deleteInscriptionByIdSuccess({id: action.id}) ),
+          //Si el servicio da error
+          catchError((error) => of(InscriptionActions.deleteInscriptionByIdFailure({ error })))
+        )
+      )
+    );
+  });
 
   constructor(
     // private actions$: Actions,

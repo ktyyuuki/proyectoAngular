@@ -6,10 +6,14 @@ export const userFeatureKey = 'user';
 
 export interface State {
   users: User[];
+  isLoading: boolean;
+  error: unknown;
 }
 
 export const initialState: State = {
   users: [],
+  isLoading: false,
+  error: null,
 };
 
 export const reducer = createReducer(
@@ -17,49 +21,92 @@ export const reducer = createReducer(
   on(UserActions.loadUsers, (state) => {
     return {
       ...state,
-      users: [
-        {
-          id: "1",
-          email: "admin@mail.com",
-          name: "admin prueba",
-          accessToken: "AakjdksaMNfjfpf123",
-          password: "123456",
-          address: "Rancagua norte #123",
-          phone: "987654321",
-          profile: "ADMIN"
-        },
-        {
-          id: "2",
-          email: "user@mail.com",
-          name: "User1",
-          accessToken: "mdFnjosi0904Sj",
-          password: "123456",
-          address: "Italia #146",
-          phone: "987654321",
-          profile: "USER"
-        }
-      ]
+      isLoading: true,
     }
   }),
-  on(UserActions.addUser, (state, action) => {
+  on(UserActions.loadUsersSuccess, (state, action) => {
     return {
       ...state,
-      users: [...state.users, { id: 'new', ...action.user }]
+      users: action.data,
+      isLoading: false,
+      error: null,
     }
   }),
-  on(UserActions.deleteUserById, (state, action) => {
+  on(UserActions.loadUsersFailure, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: action.error,
+    }
+  }),
+
+  on(UserActions.addUser, (state) => {
+    return {
+      ...state,
+      isLoading: true
+    }
+  }),
+  on(UserActions.addUserSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: null,
+      users: [...state.users, action.data]
+    }
+  }),
+  on(UserActions.addUserFailure, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: action.error,
+    }
+  }),
+
+  on(UserActions.deleteUserById, (state) => {
     return {
       // Nuevo estado donde debemos eliminar el usuario por id
       ...state,
-      users: state.users.filter((user) => user.id !== action.id),
+      isLoading: true,
     }
   }),
-  on(UserActions.updateUserById, (state, action) => {
+  on(UserActions.deleteUserByIdSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      users: state.users.filter((user) => user.id !== action.id),
+      error: null,
+    }
+  }),
+  on(UserActions.deleteUSerByIdFailure, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+      error: action.error,
+    }
+  }),
+
+  on(UserActions.updateUserById, (state) => {
     return{
       ...state,
-      users: state.users.map((user) => user.id === action.id ? {...user, ...action.data} : user),
+      isLoading: true
     }
   }),
+  on(UserActions.updateUserByIdSuccess, (state, action) => {
+    return{
+      ...state,
+      isLoading: false,
+      users: state.users.map((user) => user.id === action.data.id ? {...user, ...action.data} : user),
+      error: null,
+    }
+  }),
+  on(UserActions.updateUserByIdFailure, (state, action) => {
+    return{
+      ...state,
+      isLoading: false,
+      error: action.error,
+    }
+  }),
+
   on(UserActions.resetState, () => initialState)
 );
 

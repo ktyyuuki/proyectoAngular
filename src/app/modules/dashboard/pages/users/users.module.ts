@@ -9,6 +9,7 @@ import { UserDialogFormComponent } from './components/user-dialog-form/user-dial
 import { StoreModule } from '@ngrx/store';
 import { userFeature } from './store/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './store/user.effects';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { EffectsModule } from '@ngrx/effects';
     UsersRoutingModule,
     SharedModule,
     StoreModule.forFeature(userFeature),
-    EffectsModule.forFeature([]),
+    EffectsModule.forFeature([UserEffects]),
   ]
 })
 export class UsersModule { }

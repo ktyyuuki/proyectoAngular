@@ -9,3 +9,13 @@ export const selectUsers = createSelector(
   selectUserState,
   (state) => state.users
 )
+
+export const selectIsLoadingtUsers = createSelector(
+  selectUserState,
+  (state) => state.isLoading
+)
+
+export const selectUsersError = createSelector(
+  selectUserState,
+  (state) => state.error
+)

@@ -14,12 +14,7 @@ export class UsersService {
   constructor(private httpClient: HttpClient, private store: Store) { }
 
   getUsers(): Observable<User[]> {
-    // return of([...FAKE_USERS_DB]).pipe(delay(1000));
     return this.httpClient.get<User[]>(`${environment.baseApiUrl}/users`).pipe(delay(1000));
-  }
-
-  loadUsers() : void{
-    this.store.dispatch(UserActions.loadUsers());
   }
 
   // addUser(payload: {name: User['name'], email: User['email'], password: User['password'], profile: User['profile']}): Observable<User[]> {

@@ -4,8 +4,9 @@ import { UsersService } from '../../../../core/services/users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogFormComponent } from './components/user-dialog-form/user-dialog-form.component';
 import { Store } from '@ngrx/store';
-import { Observable, tap } from 'rxjs';
-import { selectUsers } from './store/user.selectors';
+import { Observable, Subscription, tap } from 'rxjs';
+import { selectIsLoadingtUsers, selectUsers, selectUsersError } from './store/user.selectors';
+import { UserActions } from './store/user.actions';
 
 @Component({
   selector: 'app-users',
@@ -15,32 +16,35 @@ import { selectUsers } from './store/user.selectors';
   styleUrl: './users.component.scss'
 })
 export class UsersComponent implements OnInit, OnDestroy{
-  dataSource : User[] = [];
-  isLoading : boolean = false;
-
   users$: Observable<User[]>;
+  isLoading$ : Observable<boolean>;
+
+  dataSource : User[] = [];
+  error$: Observable<unknown>;
+  private subscription = new Subscription();
 
   constructor(
     private usersService: UsersService,
     private matDialog: MatDialog,
-    private store: Store
+    private store: Store,
   ){
     this.users$ = this.store.select(selectUsers);
+    this.isLoading$ = this.store.select(selectIsLoadingtUsers);
+    this.error$ = this.store.select(selectUsersError);
   }
 
   ngOnDestroy(): void {
-    this.usersService.resetUserState();
+    this.subscription.unsubscribe();
+    this.store.dispatch(UserActions.resetState());
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
-    this.usersService.loadUsers();
+    this.store.dispatch(UserActions.loadUsers());
 
     this.users$.pipe(
-      tap((users) => {
-        this.dataSource = [...users];
+      tap((user) => {
+        this.dataSource = [...user];
         console.log(this.dataSource);
-        this.isLoading = false;
       })
     ).subscribe();
 
@@ -48,8 +52,8 @@ export class UsersComponent implements OnInit, OnDestroy{
     //   next: (data) => {
     //     this.dataSource = [...data];
     //   },
-    //   error: () => this.isLoading = false,
-    //   complete: () => this.isLoading = false
+    //   error: () => {},
+    //   complete: () => {}
     // })
   }
 
@@ -75,7 +79,7 @@ export class UsersComponent implements OnInit, OnDestroy{
   }
 
   addNewUser() : void {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.usersService.addUser();
 
   }
@@ -92,7 +96,7 @@ export class UsersComponent implements OnInit, OnDestroy{
   // }
 
   updateUser(userId: User['id'], data: Partial<User> ) : void {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.usersService.updateUserById(userId, data);
 
     // this.usersService.updateUserById(userId, data).subscribe({

@@ -1,7 +1,7 @@
 <div class="d-flex flex-row justify-content-between align-items-center">
   <h2 class="fw-bold fs-2 mb-4">Cursos</h2>
 
-  @if (!isLoading && (isAdmin$ | async)) {
+  @if (!(isLoading$ | async) && (isAdmin$ | async)) {
     <button title="add" (click)="openFormDialog()" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
       <mat-icon>add</mat-icon>
       Nuevo Curso
@@ -9,7 +9,7 @@
   }
 </div>
 
-@if (isLoading) {
+@if (isLoading$ | async) {
   <div class="py-5">
     <mat-spinner class="mx-auto"></mat-spinner>
   </div>

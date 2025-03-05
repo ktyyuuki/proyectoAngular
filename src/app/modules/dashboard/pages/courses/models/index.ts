@@ -6,6 +6,7 @@ export interface Courses {
   name: string;
   hours: number;
   nClasses: number;
+  teacherId: Teacher['id'];
   teacher?: Teacher;
   inscriptions?: Inscription
 }

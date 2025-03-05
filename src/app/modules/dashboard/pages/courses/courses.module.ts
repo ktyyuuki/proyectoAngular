@@ -8,6 +8,10 @@ import { CoursesTableComponent } from './components/courses-table/courses-table.
 import { CourseFormDialogComponent } from './components/course-form-dialog/course-form-dialog.component';
 import { CourseDetailComponent } from './pages/course-detail/course-detail.component';
 import { CourseStudentsComponent } from './pages/course-detail/components/course-students/course-students.component';
+import { StoreModule } from '@ngrx/store';
+import { courseFeature } from './store/course.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { CourseEffects } from './store/course.effects';
 
 
 @NgModule({
@@ -22,6 +26,8 @@ import { CourseStudentsComponent } from './pages/course-detail/components/course
     CommonModule,
     CoursesRoutingModule,
     SharedModule,
+    StoreModule.forFeature(courseFeature),
+    EffectsModule.forFeature([CourseEffects]),
   ]
 })
 export class CoursesModule { }

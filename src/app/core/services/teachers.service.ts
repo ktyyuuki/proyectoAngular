@@ -15,4 +15,8 @@ export class TeachersService {
     // return of([...TEACHERS_DB]);
     return this.httpClient.get<Teacher[]>(`${environment.baseApiUrl}/teachers`);
   }
+
+  getTeacherById(id: Teacher['id']): Observable<Teacher> {
+    return this.httpClient.get<Teacher>(`${environment.baseApiUrl}/teachers/${id}`);
+  }
 }

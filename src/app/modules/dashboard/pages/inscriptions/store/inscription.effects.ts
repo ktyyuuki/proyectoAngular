@@ -32,20 +32,6 @@ export class InscriptionEffects {
     );
   });
 
-  // createInscription$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(InscriptionActions.createInscription),
-  //     concatMap((action) =>
-  //       this.inscriptionsService.createInscription(action.data).pipe(
-  //         //Si el servicio responde ok
-  //         map((inscriptions) => InscriptionActions.createInscriptionSuccess({ data: inscriptions }) ),
-  //         //Si el servicio da error
-  //         catchError((error) => of(InscriptionActions.createInscriptionFailure({ error })))
-  //       )
-  //     )
-  //   );
-  // });
-
   createInscription$ = createEffect(() =>
     this.actions$.pipe(
       ofType(InscriptionActions.createInscription),

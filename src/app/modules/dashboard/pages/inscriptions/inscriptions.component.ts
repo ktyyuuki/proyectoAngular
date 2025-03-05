@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Inscription } from './models';
-import { InscriptionsService } from '../../../../core/services/inscriptions.service';
 import { CoursesService } from '../../../../core/services/courses.service';
 import { StudentsService } from '../../../../core/services/students.service';
 import { Student } from '../students/models';
@@ -34,7 +33,6 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
-    // private inscriptionService: InscriptionsService,
     private coursesService: CoursesService,
     private studentService: StudentsService,
     private matDialog: MatDialog,

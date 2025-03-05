@@ -40,7 +40,7 @@ export class CourseFormDialogComponent implements OnInit {
         name: data.editingCourse.name,
         hours: data.editingCourse.hours,
         nClasses: data.editingCourse.nClasses,
-        teacherId: data.editingCourse.teacher?.id || null // Asegura que solo almacena el ID
+        teacherId: data.editingCourse.teacherId || null // Asegura que solo almacena el ID
       });
     }
   }

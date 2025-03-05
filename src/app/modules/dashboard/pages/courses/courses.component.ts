@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CoursesService } from '../../../../core/services/courses.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Courses } from './models';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseFormDialogComponent } from './components/course-form-dialog/course-form-dialog.component';
-import { Teacher } from '../teachers/models/teacher';
-import { Observable } from 'rxjs';
-import { AuthService } from '../../../../core/services/auth.service';
+import { Observable, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectAuthUserAdmin } from '../../../../store/auth/auth.selectors';
+import { selectCourses, selectCoursesError, selectIsLoadingCourses } from './store/course.selectors';
+import { CourseActions } from './store/course.actions';
 
 @Component({
   selector: 'app-courses',
@@ -16,21 +15,37 @@ import { selectAuthUserAdmin } from '../../../../store/auth/auth.selectors';
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss'
 })
-export class CoursesComponent implements OnInit {
-  isLoading = false;
-  dataSource: Courses[] = [];
+export class CoursesComponent implements OnInit, OnDestroy {
   isAdmin$: Observable<boolean>;
 
+  courses$ : Observable<Courses[]>;
+  isLoading$ : Observable<boolean>;
+  error$: Observable<unknown>;
+
+  dataSource: Courses[] = [];
+
   constructor(
-    private coursesService: CoursesService,
     private matDialog: MatDialog,
     private store: Store
   ){
     this.isAdmin$ = this.store.select(selectAuthUserAdmin);
+    this.courses$ = this.store.select(selectCourses);
+    this.isLoading$ = this.store.select(selectIsLoadingCourses);
+    this.error$ = this.store.select(selectCoursesError);
   }
 
-  handleCoursesUpdate(data: Courses[]): void {
-    this.dataSource = [...data];
+  ngOnDestroy(): void {
+    this.store.dispatch(CourseActions.resetState());
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(CourseActions.loadCourses());
+    this.courses$.pipe(
+      tap((courses) => {
+        this.dataSource = [...courses];
+        console.log(this.dataSource);
+      })
+    ).subscribe();
   }
 
   openFormDialog(editingCourse?: Courses): void{
@@ -53,60 +68,17 @@ export class CoursesComponent implements OnInit {
       });
   }
 
-  addNewCourse(data: {name: string, hours: number, nClasses: number, teacherId: Teacher['id']}): void {
-    this.isLoading = true;
-    this.coursesService.addCourse(data).subscribe({
-      next: (data) => this.handleCoursesUpdate(data),
-      error: (err) => (this.isLoading = false),
-      complete: () => (this.isLoading = false)
-    });
+  addNewCourse(data: Omit<Courses, 'id'>): void {
+    this.store.dispatch(CourseActions.addCourse({data}));
   }
 
-  updateCourse(id: string, data: { name: string, hours: number, nClasses: number, teacherId: string }) {
-    // console.log("Actualizando curso con datos:", id, data);
-    this.isLoading = true;
-    this.coursesService.updateCourseById(id, data).subscribe({
-      next: (updatedCourses) => {
-        this.handleCoursesUpdate(updatedCourses);
-      },
-      error: (err) => {
-        this.isLoading = false;
-      },
-      complete: () => this.isLoading = false
-    });
+  updateCourse(id: Courses['id'], data: Partial<Courses>) {
+    this.store.dispatch(CourseActions.updateCourseById({id, data}));
   }
 
-  ngOnInit(): void {
-    this.isLoading = true;
-
-    this.coursesService.getCourses().subscribe({
-      next: (data) => {
-        // console.log(data);
-        this.handleCoursesUpdate(data);
-      },
-      error: () => {
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      }
-    })
-  }
-
-  onDelete(id: string): void {
+  onDelete(id: Courses['id']): void {
     if (confirm("¿Estas seguro que deseas eliminar este curso?")){
-      this.isLoading = true;
-      this.coursesService.deleteCourseById(id).subscribe({
-        next: (data) => {
-          this.handleCoursesUpdate(data);
-        },
-        error: () =>{
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      })
+      this.store.dispatch(CourseActions.deleteCourseById({id}));
     }
   }
 }

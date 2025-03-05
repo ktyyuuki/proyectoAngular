@@ -18,31 +18,25 @@ export class CoursesService {
     return this.httpClient.get<Courses[]>(`${environment.baseApiUrl}/courses?_embed=teacher`).pipe(delay(1000));
   }
 
-  addCourse(payload: {name: string, hours: number, nClasses: number, teacherId: Teacher['id']}): Observable<Courses[]> {
-    // 1° Crear curso
+  addCourse(payload: Omit<Courses, 'id'>): Observable<Courses> {
     return (
       this.httpClient
         .post<Courses>(`${environment.baseApiUrl}/courses`, payload)
-        //2° paso: consulta el listado de actualizado de los cursos
-        .pipe(concatMap(() => this.getCourses()))
       );
   }
 
-  updateCourseById(id: string, data: Partial<Courses>): Observable<Courses[]> {
-    return (
-      this.httpClient.patch<Courses>(`${environment.baseApiUrl}/courses/${id}`, data)
-      .pipe(concatMap(() => this.getCourses()))
-    )
+  updateCourseById(id: string, data: Partial<Courses>): Observable<Courses> {
+    return this.httpClient.patch<Courses>(`${environment.baseApiUrl}/courses/${id}`, data)
   }
 
-  deleteCourseById(id: string): Observable<Courses[]> {
+  deleteCourseById(id: Courses['id']): Observable<Courses[]> {
     return (
       this.httpClient.delete<Courses>(`${environment.baseApiUrl}/courses/${id}`)
         .pipe(concatMap(() => this.getCourses()))
       )
   }
 
-  getCourseById(id: string): Observable<Courses> {
+  getCourseById(id: Courses['id']): Observable<Courses> {
     return this.httpClient.get<Courses>(`${environment.baseApiUrl}/courses/${id}?_embed=inscriptions&_embed=teacher`);
   }
 }

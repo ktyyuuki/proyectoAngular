@@ -27,7 +27,6 @@ export class AuthService {
   login(payload: LoginPayload): void {
     this.httpClient.get<User[]>(`${environment.baseApiUrl}/users?email=${payload.email}&password=${payload.password}`).subscribe({
       next: (usersResult) => {
-        // console.log("Usuarios obtenidos:", users);
         if (!usersResult[0]) {
           alert('Email y/o password inválidos');
           return;

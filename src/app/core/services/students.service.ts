@@ -16,7 +16,7 @@ export class StudentsService {
     return this.httpClient.get<Student[]>(`${environment.baseApiUrl}/students`).pipe(delay(1000));
   }
 
-  addStudent(student: Student): Observable<Student> {
+  addStudent(student: Omit<Student, 'id'>): Observable<Student> {
     return this.httpClient.post<Student>(`${environment.baseApiUrl}/students`, student)
   }
 
@@ -24,11 +24,15 @@ export class StudentsService {
     return this.httpClient.get<Student>(`${environment.baseApiUrl}/students/${id}?_embed=inscriptions`);
   }
 
-  updateStudentById(id: string, data: {name: string}): Observable<Student[]> {
+  updateStudentById(id: Student['id'], data: Partial<Student>): Observable<Student> {
+    return this.httpClient.patch<Student>(`${environment.baseApiUrl}/students/${id}`, data)
+  }
+
+  deleteStudentById(id: Student['id']): Observable<Student[]> {
     return (
-      this.httpClient.patch<Student>(`${environment.baseApiUrl}/students/${id}`, data)
+      this.httpClient.delete<Student>(`${environment.baseApiUrl}/students/${id}`)
       .pipe(concatMap(() => this.getStudentsObservable()))
-    )
+    );
   }
 
 }

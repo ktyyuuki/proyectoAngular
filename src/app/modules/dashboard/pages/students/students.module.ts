@@ -13,6 +13,10 @@ import { SharedModule } from "../../../../shared/shared.module";
 import { StudentDialogComponent } from './components/student-dialog/student-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { StudentDetailComponent } from './pages/student-detail/student-detail.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { studentFeature } from './store/student.reducer';
+import { StudentEffects } from './store/student.effects';
 
 
 
@@ -34,6 +38,8 @@ import { StudentDetailComponent } from './pages/student-detail/student-detail.co
     MatInputModule,
     SharedModule,
     MatDialogModule,
+    StoreModule.forFeature(studentFeature),
+    EffectsModule.forFeature([StudentEffects]),
 ],
   exports: [
     StudentsComponent

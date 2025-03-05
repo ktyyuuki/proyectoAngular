@@ -42,7 +42,7 @@ export class UsersComponent implements OnInit, OnDestroy{
     this.users$.pipe(
       tap((user) => {
         this.dataSource = [...user];
-        console.log(this.dataSource);
+        // console.log(this.dataSource);
       })
     ).subscribe();
 

@@ -10,6 +10,11 @@ export const selectInscriptions = createSelector(
   (state) => state.inscriptions
 )
 
+export const selectInscriptionsCount = createSelector(
+  selectInscriptionState,
+  (state) => state.inscriptions.length
+)
+
 export const selectIsLoadingInscriptions = createSelector(
   selectInscriptionState,
   (state) => state.isLoading

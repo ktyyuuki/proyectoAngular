@@ -3,9 +3,11 @@ import { Student, STUDENT_GENDER, STUDENT_PROFFILE } from './models';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentDialogComponent } from './components/student-dialog/student-dialog.component';
 import { StudentsService } from '../../../../core/services/students.service';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectAuthUserAdmin, selectAuthUserProfile } from '../../../../store/auth/auth.selectors';
+import { selectIsLoadingStudents, selectStudents, selectStudentsError } from './store/student.selectors';
+import { StudentActions } from './store/student.actions';
 
 @Component({
   selector: 'app-students',
@@ -17,13 +19,14 @@ import { selectAuthUserAdmin, selectAuthUserProfile } from '../../../../store/au
 export class StudentsComponent implements OnInit, OnDestroy{
   // displayedColumns: string[] = ['id', 'name', 'mail','gender', 'phone', 'edit', 'view', 'delete'];
   displayedColumns: string[] = [];
-  students: Student[] = [];
   isAdmin$: Observable<boolean>;
 
-  editingStudentId: number | null = null;
+  students$: Observable<Student[]>;
+  isLoading$: Observable<boolean>;
+  error$: Observable<unknown>;
 
-  isLoading = false;
-  hasError = false;
+  students: Student[] = [];
+  editingStudentId: number | null = null;
 
   private destroy$ = new Subject<void>();
 
@@ -33,22 +36,33 @@ export class StudentsComponent implements OnInit, OnDestroy{
     private store: Store
   ) {
     this.isAdmin$ = this.store.select(selectAuthUserAdmin);
+
+    this.students$ = this.store.select(selectStudents);
+    this.isLoading$ = this.store.select(selectIsLoadingStudents);
+    this.error$ = this.store.select(selectStudentsError);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.store.dispatch(StudentActions.resetState());
   }
 
   ngOnInit(): void {
-    this.loadStudentsObs();
-
     this.isAdmin$
     .pipe(takeUntil(this.destroy$)) // Se desuscribe cuando el componente se destruye
     .subscribe(isAdmin => {
       this.displayedColumns = this.getDisplayedColumns(isAdmin);
       // console.log('Admin:', isAdmin, 'Columns:', this.displayedColumns);
     });
-  }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.store.dispatch(StudentActions.loadStudents());
+    this.students$.pipe(
+      tap((students) => {
+        this.students = [...students];
+        // console.log(this.students);
+      })
+    ).subscribe();
   }
 
   getDisplayedColumns(isAdmin: boolean) : string[] {
@@ -57,23 +71,6 @@ export class StudentsComponent implements OnInit, OnDestroy{
       columns.push('edit', 'delete');
     }
     return columns;
-  }
-
-  loadStudentsObs(): void {
-    this.isLoading = true;
-    this.studentService.getStudentsObservable().subscribe({
-      next: (students) => {
-        this.students = students;
-      },
-      error: (error) => {
-        this.hasError = true;
-        alert(error);
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      }
-    })
   }
 
   openFormStudent(student?: Student): void{
@@ -86,21 +83,9 @@ export class StudentsComponent implements OnInit, OnDestroy{
         next: (valorFormulario) => {
           if (!!valorFormulario) {
             if (isEditing) {
-              this.studentService.updateStudentById(student!.id, valorFormulario).subscribe({
-                next: (updatedStudents) => {
-                  this.students = updatedStudents;
-                  this.isLoading = false;
-                },
-                error: (err) => {
-                  console.error("Error al actualizar el estudiante:", err);
-                  this.isLoading = false;
-                }
-              });
+              this.updateStudentById(student.id, valorFormulario);
             } else {
-              this.studentService.addStudent(valorFormulario).subscribe((newStudent) => {
-                this.students = [...this.students, newStudent];
-                this.isLoading = false;
-              });
+              this.createStudent(valorFormulario);
             }
           }
         },
@@ -108,9 +93,17 @@ export class StudentsComponent implements OnInit, OnDestroy{
       })
   }
 
+  createStudent(data: Omit<Student, 'id'>): void {
+    this.store.dispatch(StudentActions.addStudent({data}));
+  }
+
+  updateStudentById(id: Student['id'], data: Partial<Student>): void {
+    this.store.dispatch(StudentActions.updateStudentById({id, data}));
+  }
+
   onDelete(id: Student['id']): void {
     if(confirm('¿Estás seguro de eliminar este estudiante?')){
-      this.students = this.students.filter((student) => student.id !== id);
+      this.store.dispatch(StudentActions.deleteStudentById({id}));
     }
   }
 }

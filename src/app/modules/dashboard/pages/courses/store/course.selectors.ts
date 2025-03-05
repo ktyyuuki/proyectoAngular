@@ -10,6 +10,11 @@ export const selectCourses = createSelector(
   (state) => state.courses
 )
 
+export const selectCoursesCount = createSelector(
+  selectCourseState,
+  (state) => state.courses.length
+)
+
 export const selectIsLoadingCourses = createSelector(
   selectCourseState,
   (state) => state.isLoading

@@ -1,7 +1,7 @@
 <div class="d-flex flex-row flex-wrap justify-content-between align-items-center mb-3">
   <h1 class="fw-bold fs-2">Estudiantes</h1>
 
-  @if (!isLoading && (isAdmin$ | async)) {
+  @if (!(isLoading$ | async) && (isAdmin$ | async)) {
     <button title="add" (click)="openFormStudent()" mat-flat-button class="ms-3 btn-color-primary text-uppercase">
       <mat-icon>add</mat-icon>
       Nuevo Estudiante
@@ -9,14 +9,14 @@
   }
 </div>
 
-@if (isLoading) {
+@if (isLoading$ | async ) {
   <div class="h-100 d-flex align-items-center justify-content-center">
     <mat-spinner></mat-spinner>
   </div>
 } @else {
   <div class="row gx-4">
       <!-- Tabla estudiantes -->
-      @if (hasError) {
+      @if (error$ | async) {
         <p>Ha ocurrido un error</p>
       } @else {
         <div class="p-2 border border-light rounded-4 shadow-sm mb-5 table-responsive">

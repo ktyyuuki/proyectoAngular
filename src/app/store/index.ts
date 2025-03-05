@@ -3,11 +3,11 @@ import { counterFeatureKey, counterReducer, CounterState } from "./counter/count
 import { authFeatureKey, authReducer, AuthState } from "./auth/auth.reducer";
 
 export interface RootState {
-  [counterFeatureKey]: CounterState;
+  // [counterFeatureKey]: CounterState;
   [authFeatureKey]: AuthState;
 }
 
 export const rootReducer: ActionReducerMap<RootState> = {
-  [counterFeatureKey]: counterReducer,
+  // [counterFeatureKey]: counterReducer,
   [authFeatureKey]: authReducer,
 };

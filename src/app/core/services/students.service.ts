@@ -17,15 +17,15 @@ export class StudentsService {
   }
 
   addStudent(student: Omit<Student, 'id'>): Observable<Student> {
-    return this.httpClient.post<Student>(`${environment.baseApiUrl}/students`, student)
+    return this.httpClient.post<Student>(`${environment.baseApiUrl}/students`, student).pipe(delay(500))
   }
 
   getStudentById(id: Student['id']): Observable<Student> {
-    return this.httpClient.get<Student>(`${environment.baseApiUrl}/students/${id}?_embed=inscriptions`);
+    return this.httpClient.get<Student>(`${environment.baseApiUrl}/students/${id}?_embed=inscriptions`).pipe(delay(550));
   }
 
   updateStudentById(id: Student['id'], data: Partial<Student>): Observable<Student> {
-    return this.httpClient.patch<Student>(`${environment.baseApiUrl}/students/${id}`, data)
+    return this.httpClient.patch<Student>(`${environment.baseApiUrl}/students/${id}`, data).pipe(delay(500))
   }
 
   deleteStudentById(id: Student['id']): Observable<Student[]> {

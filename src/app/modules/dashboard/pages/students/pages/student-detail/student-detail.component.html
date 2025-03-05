@@ -7,50 +7,58 @@
   </div>
 </div>
 
-@if (student$ | async) {
-  <div class="card-info-student rounded-4 py-3 px-4 mb-4">
-    <div class="row">
-      <div class="col-auto">
-        <figure class="bg-secondary">
-          <img src="person.jpg" class="img-fluid" alt="img student">
-        </figure>
-      </div>
-      <div class="col pt-2">
-        <p class="title-small mb-1">Nombre</p>
-        <h1 appHeaderSize class="mb-1">{{ fullName$ | async }}</h1>
-        <p class="text-14 mb-2 fw-medium">{{ profile$ | async }}</p>
-        <p class="title-small">Género: {{ (gender$ | async) === "F" ? "Femenino" : "Masculino" }}</p>
-      </div>
-      <div class="col">
-        <mat-list>
-          <mat-list-item class="mb-1"><span class="title-small">E-mail</span><a href="mailto:{{email$ | async}}">{{ email$ | async }}</a></mat-list-item>
-          <mat-list-item><span class="title-small">Teléfono</span>{{ phone$ | async }}</mat-list-item>
-        </mat-list>
-      </div>
+@if(isLoading$ | async){
+  <mat-spinner></mat-spinner>
+} @else {
+  @if(error$ | async){
+    <div class="text-center py-5">
+      <p class="fs-3 fw-semibold text-secondary">Ha Ocurrido un error</p>
     </div>
-  </div>
-
-  <!-- Cursos a los que está inscrito -->
-  <h4 appHeaderSize class="mb-3">Cursos inscritos</h4>
-  <div class="mx-auto">
-    @for (course of (courses$ | async); track $index) {
-      <div class="list-course rounded-4 p-3 mb-2">
-        <div class="row align-items-center g-4">
-          <div class="col-auto">
-            <div class="icon">
-              <mat-icon>book</mat-icon>
-            </div>
-          </div>
-          <p appHeaderSize class="col-5 mb-0"><small class="title-small fw-medium">ID Curso: {{course.id}}</small>{{course.name}}</p>
-          <p class="col mb-0"><span class="title-small mb-1">Profesor Asignado:</span>{{course.teacher?.name}}</p>
-          <div class="col-auto ms-auto">
-            <button mat-icon-button (click)="removeInscription(course.id)">
-              <mat-icon>close</mat-icon>
-            </button>
-          </div>
+  } @else {
+    <div class="card-info-student rounded-4 py-3 px-4 mb-4">
+      <div class="row">
+        <div class="col-auto">
+          <figure class="bg-secondary">
+            <img src="person.jpg" class="img-fluid" alt="img student">
+          </figure>
+        </div>
+        <div class="col pt-2">
+          <p class="title-small mb-1">Nombre</p>
+          <h1 appHeaderSize class="mb-1">{{ fullName$ | async }}</h1>
+          <p class="text-14 mb-2 fw-medium">{{ profile$ | async }}</p>
+          <p class="title-small">Género: {{ (gender$ | async) === "F" ? "Femenino" : "Masculino" }}</p>
+        </div>
+        <div class="col">
+          <mat-list>
+            <mat-list-item class="mb-1"><span class="title-small">E-mail</span><a href="mailto:{{email$ | async}}">{{ email$ | async }}</a></mat-list-item>
+            <mat-list-item><span class="title-small">Teléfono</span>{{ phone$ | async }}</mat-list-item>
+          </mat-list>
         </div>
       </div>
-    }
-  </div>
+    </div>
+
+    <!-- Cursos a los que está inscrito -->
+    <h4 appHeaderSize class="mb-3">Cursos inscritos</h4>
+    <div class="mx-auto">
+      @for (course of (courses$ | async); track $index) {
+        <div class="list-course rounded-4 p-3 mb-2">
+          <div class="row align-items-center g-4">
+            <div class="col-auto">
+              <div class="icon">
+                <mat-icon>book</mat-icon>
+              </div>
+            </div>
+            <p appHeaderSize class="col-5 mb-0"><small class="title-small fw-medium">ID Curso: {{course.id}}</small>{{course.name}}</p>
+            <p class="col mb-0"><span class="title-small mb-1">Profesor Asignado:</span>{{course.teacher?.name}}</p>
+            <div class="col-auto ms-auto">
+              <button mat-icon-button (click)="removeInscription(course.id)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
 }
 

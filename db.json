@@ -25,7 +25,7 @@
       "name": "new user",
       "email": "new@email.com",
       "password": "123123123",
-      "address": "addresss",
+      "address": "address",
       "phone": "123123123",
       "profile": "USER"
     }
@@ -129,9 +129,14 @@
       "courseId": "jav34i"
     },
     {
-      "id": "0166",
+      "id": "61dd",
       "studentId": "a28f",
       "courseId": "jav34i"
+    },
+    {
+      "id": "1d88",
+      "studentId": "a28f",
+      "courseId": "fa4e"
     }
   ]
 }

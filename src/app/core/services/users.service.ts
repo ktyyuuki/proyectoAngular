@@ -18,16 +18,14 @@ export class UsersService {
   }
 
   addUser(payload: Omit<User, 'id'>): Observable<User> {
-    return (
-      this.httpClient.post<User>(`${environment.baseApiUrl}/users`, payload)
-    );
+    return this.httpClient.post<User>(`${environment.baseApiUrl}/users`, payload).pipe(delay(500));
   }
 
   // updateUserById(id: User['id'], data: Partial<User>): void {
   //   this.store.dispatch(UserActions.updateUserById({id, data}));
   // }
   updateUserById(id: User['id'], data: Partial<User>): Observable<User> {
-    return this.httpClient.patch<User>(`${environment.baseApiUrl}/users/${id}`, data);
+    return this.httpClient.patch<User>(`${environment.baseApiUrl}/users/${id}`, data).pipe(delay(500));
   }
 
   deleteUserById(id: User['id']): Observable<User[]>{

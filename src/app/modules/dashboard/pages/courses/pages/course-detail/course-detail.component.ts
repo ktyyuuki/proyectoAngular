@@ -71,9 +71,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy{
 
     this.course$.subscribe((course) => {
       if (course && Array.isArray(course.inscriptions)) {
-        // console.log("📌 Inscripciones:", course.inscriptions);
         const studentIds = course.inscriptions.map((x) => x.studentId ?? '');
-        // console.log("📌 Estudiante IDs antes de dispatch:", studentIds);
 
         this.store.dispatch(StudentActions.loadStudentsByIds({ studentIds }));
         this.students$ = this.store.select(selectStudentsByIds(studentIds));
@@ -84,7 +82,6 @@ export class CourseDetailComponent implements OnInit, OnDestroy{
             );
             return { ...student, inscriptionId: inscription?.id };
           });
-          // console.log('📌 Estudiantes con inscripción:', this.dataSource);
         });
       }
     });

@@ -19,14 +19,12 @@ export class CoursesService {
   }
 
   addCourse(payload: Omit<Courses, 'id'>): Observable<Courses> {
-    return (
-      this.httpClient
-        .post<Courses>(`${environment.baseApiUrl}/courses`, payload)
-      );
+    return this.httpClient
+        .post<Courses>(`${environment.baseApiUrl}/courses`, payload).pipe(delay(500));
   }
 
   updateCourseById(id: string, data: Partial<Courses>): Observable<Courses> {
-    return this.httpClient.patch<Courses>(`${environment.baseApiUrl}/courses/${id}`, data)
+    return this.httpClient.patch<Courses>(`${environment.baseApiUrl}/courses/${id}`, data).pipe(delay(500))
   }
 
   deleteCourseById(id: Courses['id']): Observable<Courses[]> {
@@ -37,6 +35,6 @@ export class CoursesService {
   }
 
   getCourseById(id: Courses['id']): Observable<Courses> {
-    return this.httpClient.get<Courses>(`${environment.baseApiUrl}/courses/${id}?_embed=inscriptions&_embed=teacher`);
+    return this.httpClient.get<Courses>(`${environment.baseApiUrl}/courses/${id}?_embed=inscriptions&_embed=teacher`).pipe(delay(500));
   }
 }

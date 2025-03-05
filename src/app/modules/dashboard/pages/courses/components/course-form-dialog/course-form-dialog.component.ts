@@ -53,7 +53,6 @@ export class CourseFormDialogComponent implements OnInit {
     this.teachersService.getTeachers().subscribe({
       next: (data) => {
         this.teachers = data;
-        // console.log(data);
       }
     })
   }
@@ -62,7 +61,6 @@ export class CourseFormDialogComponent implements OnInit {
       this.courseForm.markAllAsTouched();
     } else {
       const courseData = { ...this.courseForm.value };
-      // console.log("Curso enviado:", this.courseForm.value);
       this.matDialogRef.close(courseData);
     }
   }

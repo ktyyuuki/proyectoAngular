@@ -54,14 +54,11 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    // this.isLoading = true;
     this.store.dispatch(InscriptionActions.loadInscriptions());
 
     this.inscriptions$.pipe(
       tap((inscription) => {
         this.dataSource = [...inscription];
-        console.log(this.dataSource);
-        // this.isLoading = false;
       })
     ).subscribe();
 
@@ -91,9 +88,6 @@ export class InscriptionsComponent implements OnInit, OnDestroy {
   }
 
   openEditDialogForm(editInscription: Inscription): void{
-    // if(editInscription){
-    //   console.log('Se va a editar: ', editInscription);
-    // }
     this.matDialog
     .open(InscriptionEditFormComponent, {
       data: {

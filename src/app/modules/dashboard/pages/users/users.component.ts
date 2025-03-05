@@ -42,23 +42,11 @@ export class UsersComponent implements OnInit, OnDestroy{
     this.users$.pipe(
       tap((user) => {
         this.dataSource = [...user];
-        // console.log(this.dataSource);
       })
     ).subscribe();
-
-    // this.usersService.getUsers().subscribe({
-    //   next: (data) => {
-    //     this.dataSource = [...data];
-    //   },
-    //   error: () => {},
-    //   complete: () => {}
-    // })
   }
 
   openDialogForm(editingUser?: User) : void {
-    // if(editingUser){
-    //   console.log('Se va a editar: ', editingUser)
-    // }
     this.matDialog
     .open(UserDialogFormComponent, {data: {editingUser}})
     .afterClosed().subscribe({

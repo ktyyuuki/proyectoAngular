@@ -60,7 +60,6 @@ export class StudentDetailComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.studentId = this.activatedRoute.snapshot.params['id'];
-    // console.log('Student id: ', this.studentId);
 
     this.store.dispatch(StudentActions.getStudentById({id: this.studentId}));
 

@@ -43,20 +43,15 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.courses$.pipe(
       tap((courses) => {
         this.dataSource = [...courses];
-        console.log(this.dataSource);
       })
     ).subscribe();
   }
 
   openFormDialog(editingCourse?: Courses): void{
-    // if(editingCourse){
-    //   console.log('Se va a editar: ', editingCourse)
-    // }
     this.matDialog
       .open(CourseFormDialogComponent, {data: {editingCourse} })
       .afterClosed().subscribe({
         next: (data) => {
-          // console.log(data);
           if (!!data) {
             if(!!editingCourse){
               this.updateCourse(editingCourse.id, data)

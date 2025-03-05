@@ -80,13 +80,10 @@ export class StudentEffects {
   loadStudentsByIds$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(StudentActions.loadStudentsByIds),
-      // tap((action) => console.log("📌 Acción `loadStudentsByIds` con IDs:", action.studentIds)),
       concatMap((action) =>
         this.studentsService.getStudentsByIds(action.studentIds).pipe(
-          // tap((students) => console.log("📌 Estudiantes obtenidos del servicio:", students)),
           map((students) => StudentActions.loadStudentsByIdsSuccess({ data: students })),
           catchError((error) => {
-            // console.error("❌ Error en `loadStudentsByIds$`:", error);
             return of(StudentActions.loadStudentsByIdsFailure({ error }));
           })
         )

@@ -53,14 +53,12 @@ export class StudentsComponent implements OnInit, OnDestroy{
     .pipe(takeUntil(this.destroy$)) // Se desuscribe cuando el componente se destruye
     .subscribe(isAdmin => {
       this.displayedColumns = this.getDisplayedColumns(isAdmin);
-      // console.log('Admin:', isAdmin, 'Columns:', this.displayedColumns);
     });
 
     this.store.dispatch(StudentActions.loadStudents());
     this.students$.pipe(
       tap((students) => {
         this.students = [...students];
-        // console.log(this.students);
       })
     ).subscribe();
   }

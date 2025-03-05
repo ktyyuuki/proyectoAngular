@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap } from 'rxjs/operators';
+import { catchError, map, concatMap, tap } from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 import { StudentActions } from './student.actions';
 import { StudentsService } from '../../../../../core/services/students.service';
@@ -49,6 +49,18 @@ export class StudentEffects {
     );
   });
 
+  getStudentById$ = createEffect(() => {
+    return this.actions$.pipe(
+
+      ofType(StudentActions.getStudentById),
+      concatMap((action) =>
+        this.studentsService.getStudentById(action.id).pipe(
+          map((course) => StudentActions.getStudentByIdSuccess({ data: course })),
+          catchError(error => of(StudentActions.getStudentByIdFailure({ error }))))
+      )
+    );
+  });
+
   deleteStudentById$ = createEffect(() => {
     return this.actions$.pipe(
 
@@ -64,6 +76,22 @@ export class StudentEffects {
     );
   });
 
+  loadStudentsByIds$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(StudentActions.loadStudentsByIds),
+      // tap((action) => console.log("📌 Acción `loadStudentsByIds` con IDs:", action.studentIds)),
+      concatMap((action) =>
+        this.studentsService.getStudentsByIds(action.studentIds).pipe(
+          // tap((students) => console.log("📌 Estudiantes obtenidos del servicio:", students)),
+          map((students) => StudentActions.loadStudentsByIdsSuccess({ data: students })),
+          catchError((error) => {
+            // console.error("❌ Error en `loadStudentsByIds$`:", error);
+            return of(StudentActions.loadStudentsByIdsFailure({ error }));
+          })
+        )
+      )
+    );
+  });
 
   constructor(private studentsService: StudentsService) {}
 }

@@ -35,4 +35,9 @@ export class StudentsService {
     );
   }
 
+  getStudentsByIds(studentIds: string[]): Observable<Student[]> {
+    const queryParams = studentIds.map((id) => `id=${id}`).join('&');
+    return this.httpClient.get<Student[]>(`${environment.baseApiUrl}/students?${queryParams}`);
+  }
+
 }

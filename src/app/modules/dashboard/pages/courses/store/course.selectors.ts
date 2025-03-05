@@ -29,3 +29,23 @@ export const selectSelectedCourse = createSelector(
   selectCourseState,
   (state) => state.selectedCourse
 )
+export const selectSelectedCourseId = createSelector(
+  selectCourseState,
+  (state) => state.selectedCourse?.id
+)
+export const selectSelectedCourseName = createSelector(
+  selectCourseState,
+  (state) => state.selectedCourse?.name
+)
+export const selectSelectedCourseHours = createSelector(
+  selectCourseState,
+  (state) => state.selectedCourse?.hours
+)
+export const selectSelectedCourseClasses = createSelector(
+  selectCourseState,
+  (state) => state.selectedCourse?.nClasses
+)
+export const selectSelectedCourseTeacher = createSelector(
+  selectCourseState,
+  (state) => state.selectedCourse?.teacher?.name
+)

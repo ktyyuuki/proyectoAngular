@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Courses } from '../../models';
 import { CoursesService } from '../../../../../../core/services/courses.service';
 import { Student } from '../../../students/models';
-import { environment } from '../../../../../../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CourseActions } from '../../store/course.actions';
-import { selectCoursesError, selectIsLoadingCourses, selectSelectedCourse } from '../../store/course.selectors';
+import { selectCoursesError, selectIsLoadingCourses, selectSelectedCourse, selectSelectedCourseTeacher } from '../../store/course.selectors';
+import { StudentActions } from '../../../students/store/student.actions';
+import { selectStudents, selectStudentsByIds } from '../../../students/store/student.selectors';
 
 @Component({
   selector: 'app-course-detail',
@@ -20,14 +21,15 @@ import { selectCoursesError, selectIsLoadingCourses, selectSelectedCourse } from
 export class CourseDetailComponent implements OnInit, OnDestroy{
   isLoading$: Observable<boolean>;
   error$: Observable<unknown>;
-  // students$: Observable<Student[]>;
+  students$: Observable<Student[]>;
   course$: Observable<Courses | null>;
+  teacher$: Observable<string | undefined>;
 
   dataSource : Student[] = [];
   course?: Courses;
   courseId!: Courses['id'];
 
-  errorMessage: string = "";
+  // errorMessage: string = "";
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,55 +40,32 @@ export class CourseDetailComponent implements OnInit, OnDestroy{
     this.course$ = this.store.select(selectSelectedCourse);
     this.isLoading$ = this.store.select(selectIsLoadingCourses);
     this.error$ = this.store.select(selectCoursesError);
+    this.students$ = this.store.select(selectStudents);
+    this.teacher$ = this.store.select(selectSelectedCourseTeacher);
   }
 
   ngOnDestroy(): void {
     this.store.dispatch(CourseActions.resetState());
+    this.store.dispatch(StudentActions.resetState());
   }
 
   ngOnInit(): void {
-    // this.isLoading = true;
     this.courseId = this.activatedRoute.snapshot.params['id'];
 
     this.store.dispatch(CourseActions.getCourseById({id: this.courseId}));
+    this.store.dispatch(StudentActions.loadStudents());
 
-    this.coursesService.getCourseById(this.courseId).subscribe({
-      next: (courseData) => {
-        this.course = courseData;
-        this.errorMessage = '';
-
-        if (Array.isArray(courseData.inscriptions)) {
-          // Obtener los studentId de las inscripciones
-          const studentIds = courseData.inscriptions.map((x) => x.studentId).map(id => `id=${id}`).join('&');
-
-          // Obtener los estudiantes inscritos
-          this.httpClient.get<Student[]>(`${environment.baseApiUrl}/students?${studentIds}`).subscribe({
-            next: (students) => {
-              this.dataSource = students.filter(s => studentIds.includes(s.id));
-              console.log('Estudiantes inscritos:', this.dataSource);
-            },
-            complete: () => {}
-          });
-        } else {
-
-        }
-
-      },
-      error: (err) => {
-        // this.isLoading = false;
-        // console.error("Curso no encontrado ", err);
-        if (err instanceof HttpErrorResponse){
-          if (err.status === 404){
-            this.errorMessage = 'Curso no encontrado';
-          } else if (err.status === 500){
-            this.errorMessage = 'Ha ocurrido un problema en el servidor cargando el curso';
-          }
-        }
-      },
-      complete: () => {
-        // this.isLoading = false;
-        this.errorMessage = '';
+    this.course$.subscribe((course) => {
+      if (course && Array.isArray(course.inscriptions)) {
+        const studentIds = course.inscriptions.map((x) => x.studentId);
+        // console.log("📌 Estudiante IDs antes de dispatch:", studentIds);
+        this.store.dispatch(StudentActions.loadStudentsByIds({ studentIds }));
+        this.students$ = this.store.select(selectStudentsByIds(studentIds));
+        this.students$.subscribe((students) => {
+          // console.log("📌 Estudiantes obtenidos desde selector:", students);
+          this.dataSource = students;
+        });
       }
-    })
+    });
   }
 }

@@ -11,9 +11,9 @@
   <mat-spinner></mat-spinner>
 } @else {
 
-  @if (errorMessage){
+  @if (error$ | async ){
     <div class="text-center py-5">
-      <p class="fs-3 fw-semibold text-secondary">{{ errorMessage }}</p>
+      <p class="fs-3 fw-semibold text-secondary">Ha Ocurrido un error</p>
     </div>
   } @else {
     <h1 class="mb-3 fw-bold fs-2 mb-4">{{ course?.name }}</h1>
@@ -28,7 +28,7 @@
           <mat-divider class="mx-2 my-3"></mat-divider>
           <mat-list>
             <mat-list-item class="mb-2"><span class="title-small">ID</span>{{ course?.id }}</mat-list-item>
-            <mat-list-item class="mb-2"><span class="title-small">Profesor asignado</span>{{ course?.teacher?.name }}</mat-list-item>
+            <mat-list-item class="mb-2"><span class="title-small">Profesor asignado</span>{{ teacher$ | async }}</mat-list-item>
             <mat-list-item class="mb-2"><span class="title-small">Horas Totales</span>{{ course?.hours }} hrs</mat-list-item>
             <mat-list-item><span class="title-small">N° Clases</span>{{ course?.nClasses }}</mat-list-item>
           </mat-list>

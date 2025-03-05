@@ -7,9 +7,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { CourseActions } from '../../store/course.actions';
-import { selectCoursesError, selectIsLoadingCourses, selectSelectedCourse, selectSelectedCourseTeacher } from '../../store/course.selectors';
+import { selectCoursesError, selectIsLoadingCourses, selectSelectedCourse, selectSelectedCourseClasses, selectSelectedCourseHours, selectSelectedCourseId, selectSelectedCourseName, selectSelectedCourseTeacher } from '../../store/course.selectors';
 import { StudentActions } from '../../../students/store/student.actions';
 import { selectStudents, selectStudentsByIds } from '../../../students/store/student.selectors';
+import { Inscription } from '../../../inscriptions/models';
+import { InscriptionActions } from '../../../inscriptions/store/inscription.actions';
 
 @Component({
   selector: 'app-course-detail',
@@ -23,7 +25,13 @@ export class CourseDetailComponent implements OnInit, OnDestroy{
   error$: Observable<unknown>;
   students$: Observable<Student[]>;
   course$: Observable<Courses | null>;
+
+  // DATOS DEL CURSO PARA MOSTRAR EN HTML
+  courseId$: Observable<string | undefined>;
+  courseName$: Observable<string | undefined>;
   teacher$: Observable<string | undefined>;
+  hours$: Observable<number | undefined>;
+  classes$: Observable<number | undefined>;
 
   dataSource : Student[] = [];
   course?: Courses;
@@ -41,7 +49,13 @@ export class CourseDetailComponent implements OnInit, OnDestroy{
     this.isLoading$ = this.store.select(selectIsLoadingCourses);
     this.error$ = this.store.select(selectCoursesError);
     this.students$ = this.store.select(selectStudents);
+    // DATOS DEL CURSO PARA MOSTRAR EN HTML
+    this.courseId$ = this.store.select(selectSelectedCourseId);
+    this.courseName$ = this.store.select(selectSelectedCourseName);
     this.teacher$ = this.store.select(selectSelectedCourseTeacher);
+    this.hours$ = this.store.select(selectSelectedCourseHours);
+    this.classes$ = this.store.select(selectSelectedCourseClasses);
+
   }
 
   ngOnDestroy(): void {
@@ -57,15 +71,32 @@ export class CourseDetailComponent implements OnInit, OnDestroy{
 
     this.course$.subscribe((course) => {
       if (course && Array.isArray(course.inscriptions)) {
-        const studentIds = course.inscriptions.map((x) => x.studentId);
+        // console.log("📌 Inscripciones:", course.inscriptions);
+        const studentIds = course.inscriptions.map((x) => x.studentId ?? '');
         // console.log("📌 Estudiante IDs antes de dispatch:", studentIds);
+
         this.store.dispatch(StudentActions.loadStudentsByIds({ studentIds }));
         this.students$ = this.store.select(selectStudentsByIds(studentIds));
         this.students$.subscribe((students) => {
-          // console.log("📌 Estudiantes obtenidos desde selector:", students);
-          this.dataSource = students;
+          this.dataSource = students.map((student) => {
+            const inscription = course.inscriptions?.find(
+              (ins) => ins.studentId === student.id
+            );
+            return { ...student, inscriptionId: inscription?.id };
+          });
+          // console.log('📌 Estudiantes con inscripción:', this.dataSource);
         });
       }
     });
+  }
+
+  deleteInscription(inscriptionId: Inscription['id'] ): void {
+    if(confirm(`¿Estas seguro que deseas eliminar la inscripción ${inscriptionId}`)){
+      this.store.dispatch(InscriptionActions.deleteInscriptionById({id: inscriptionId}));
+
+      setTimeout(() => {
+        this.store.dispatch(CourseActions.getCourseById({ id: this.courseId }));
+      }, 500);
+    }
   }
 }

@@ -24,7 +24,7 @@ export const StudentActions = createActionGroup({
     'Delete Student By Id Success': props<{ id:Student['id'] }>(),
     'Delete Student By Id Failure': props<{ error: unknown }>(),
 
-    'Load Students By Ids': props<{ studentIds: string[] }>(),
+    'Load Students By Ids': props<{ studentIds: Student['id'][] }>(),
     'Load Students By Ids Success': props<{ data: Student[] }>(),
     'Load Students By Ids Failure': props<{ error: unknown }>(),
 

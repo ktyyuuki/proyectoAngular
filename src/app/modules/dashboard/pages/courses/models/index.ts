@@ -8,5 +8,5 @@ export interface Courses {
   nClasses: number;
   teacherId: Teacher['id'];
   teacher?: Teacher;
-  inscriptions?: Inscription
+  inscriptions?: Inscription[]
 }

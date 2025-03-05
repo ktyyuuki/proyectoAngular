@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Student } from '../../../../../students/models';
+import { Inscription } from '../../../../../inscriptions/models';
 
 @Component({
   selector: 'app-course-students',
@@ -13,4 +14,7 @@ export class CourseStudentsComponent {
 
   @Input()
   dataSource: Student[] = [];
+
+  @Output()
+  delete = new EventEmitter<Inscription['id']>();
 }

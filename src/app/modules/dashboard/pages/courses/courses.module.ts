@@ -12,6 +12,8 @@ import { StoreModule } from '@ngrx/store';
 import { courseFeature } from './store/course.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { CourseEffects } from './store/course.effects';
+import { InscriptionEffects } from '../inscriptions/store/inscription.effects';
+import { inscriptionFeature } from '../inscriptions/store/inscription.reducer';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { CourseEffects } from './store/course.effects';
     CoursesRoutingModule,
     SharedModule,
     StoreModule.forFeature(courseFeature),
-    EffectsModule.forFeature([CourseEffects]),
+    StoreModule.forFeature(inscriptionFeature),
+    EffectsModule.forFeature([CourseEffects, InscriptionEffects]),
   ]
 })
 export class CoursesModule { }

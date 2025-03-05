@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap, tap } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
+import { Observable, EMPTY, of, forkJoin } from 'rxjs';
 import { StudentActions } from './student.actions';
 import { StudentsService } from '../../../../../core/services/students.service';
+import { CoursesService } from '../../../../../core/services/courses.service';
 
 
 @Injectable()
@@ -93,5 +94,17 @@ export class StudentEffects {
     );
   });
 
-  constructor(private studentsService: StudentsService) {}
+  loadStudentCourses$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(StudentActions.loadStudentCourses),
+      concatMap(({ courseIds }) =>
+        forkJoin(courseIds.map((id) => this.coursesService.getCourseById(id))).pipe(
+          map((courses) => StudentActions.loadStudentCoursesSuccess({ courses })),
+          catchError((error) => of(StudentActions.loadStudentCoursesFailure({ error })))
+        )
+      )
+    )
+  );
+
+  constructor(private studentsService: StudentsService, private coursesService: CoursesService) {}
 }

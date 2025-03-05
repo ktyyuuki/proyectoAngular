@@ -91,7 +91,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy{
   }
 
   deleteInscription(inscriptionId: Inscription['id'] ): void {
-    if(confirm(`¿Estas seguro que deseas eliminar la inscripción ${inscriptionId}`)){
+    if(confirm(`¿Estas seguro que deseas eliminar la inscripción?`)){
       this.store.dispatch(InscriptionActions.deleteInscriptionById({id: inscriptionId}));
 
       setTimeout(() => {

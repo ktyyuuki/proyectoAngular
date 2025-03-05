@@ -16,6 +16,32 @@ export const selectSelectedStudent = createSelector(
   (state) => state.selectedStudent
 )
 
+export const selectStudentCourses = createSelector(
+  selectStudentState,
+  (state) => state.studentCourses
+);
+
+export const selectSelectedStudentFullName = createSelector(
+  selectStudentState,
+  (state) => state.selectedStudent ? `${state.selectedStudent.name} ${state.selectedStudent.lastName}` : null
+)
+export const selectSelectedStudentPhone = createSelector(
+  selectStudentState,
+  (state) => state.selectedStudent?.phone
+)
+export const selectSelectedStudentMail = createSelector(
+  selectStudentState,
+  (state) => state.selectedStudent?.email
+)
+export const selectSelectedStudentProfile = createSelector(
+  selectStudentState,
+  (state) => state.selectedStudent?.profile
+)
+export const selectSelectedStudentGender = createSelector(
+  selectStudentState,
+  (state) => state.selectedStudent?.gender
+)
+
 export const selectStudentsCount = createSelector(
   selectStudentState,
   (state) => state.students.length

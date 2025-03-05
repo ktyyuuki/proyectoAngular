@@ -17,6 +17,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { studentFeature } from './store/student.reducer';
 import { StudentEffects } from './store/student.effects';
+import { inscriptionFeature } from '../inscriptions/store/inscription.reducer';
+import { InscriptionEffects } from '../inscriptions/store/inscription.effects';
 
 
 
@@ -39,7 +41,8 @@ import { StudentEffects } from './store/student.effects';
     SharedModule,
     MatDialogModule,
     StoreModule.forFeature(studentFeature),
-    EffectsModule.forFeature([StudentEffects]),
+    StoreModule.forFeature(inscriptionFeature),
+    EffectsModule.forFeature([StudentEffects, InscriptionEffects]),
 ],
   exports: [
     StudentsComponent
